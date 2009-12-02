@@ -19,12 +19,17 @@
 #include "FileMg.h"
 #include "Ovff_Manage.h"
 #include <iostream>
+#include <cstdlib>
 
 using std::cout;
 using std::endl;
 
 int main(int argc, char *argv[])
 {
+  if(argc == 1) {
+    cout << "usage: ovff [file]" << endl;
+    exit(1);
+  }
   FileMg handle(argv[1], 0);
   Ovff ovff("boshiamy_t.db");
   while(handle.next())

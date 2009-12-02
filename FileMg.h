@@ -44,12 +44,14 @@ class FileMg {
     //  4: empty, print newline charactor
 
     // private member functions;
+    void initialize(const char* fname, bool md);
     void make_syntax(void);
     friend class Ovff;
     friend int callback(void* fg, int argc, char **argv, char **ColName);
 
   public:
     FileMg(const char* fname, bool md);
+    FileMg(const FileMg& robj);
     ~FileMg();
     FileMg& operator << (const char* chs);
     int next(void);

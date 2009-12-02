@@ -26,7 +26,7 @@
 using std::string;
 using std::ios;
 
-FileMg::FileMg(const char* fname, bool md) {
+void FileMg::initialize(const char* fname, bool md) {
   mode = md;
   filename = fname;
   string outname;
@@ -39,6 +39,14 @@ FileMg::FileMg(const char* fname, bool md) {
   for(int i = 0; i < 5; i++)
     m[i] = 0;
   mlen = 0;
+}
+
+FileMg::FileMg(const char* fname, bool md) {
+  initialize(fname, md);
+}
+
+FileMg::FileMg(const FileMg& robj) {
+  initialize(robj.filename.c_str(), robj.mode);
 }
 
 FileMg::~FileMg() {
@@ -87,8 +95,8 @@ int FileMg::next(void) {
         case ']':  m[i] = 46;  break;
         default:   m[i] = tmp[i] - 64;
       }
+    make_syntax();
   }
-  make_syntax();
   return 1;
 }
 

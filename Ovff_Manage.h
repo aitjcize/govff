@@ -24,14 +24,16 @@
 
 class Ovff {
   private:
+    char* db_name;
     sqlite3 *db;
     char* ErrMsg;
 
   public:
     Ovff(const char* db_name);
+    Ovff(const Ovff& robj);
     ~Ovff();
     void query_and_write(FileMg& in);
-    friend int callback(void *NotUsed, int argc, char **argv, char **ColName);
+    friend int callback(void* fg, int argc, char **argv, char **ColName);
 };
 
 #endif
