@@ -34,5 +34,6 @@ int main(int argc, char *argv[])
   Ovff ovff("boshiamy_t.db");
   while(handle.next())
     ovff.query_and_write(handle);
+  cout << "Ok!" << endl;
   return 0;
 }

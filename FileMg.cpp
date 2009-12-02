@@ -31,9 +31,9 @@ void FileMg::initialize(const char* fname, bool md) {
   filename = fname;
   string outname;
   if(mode == 0)
-    outname = outname + filename + "_decoded";
+    outname = outname + "d_" + filename;
   else
-    outname = outname + filename + "_encoded";
+    outname = outname + "e_" + filename;
   fin.open(filename.c_str());
   fout.open(outname.c_str());
   for(int i = 0; i < 5; i++)
@@ -66,19 +66,18 @@ int FileMg::next(void) {
   imode = 1;              // reset imode to 1
 
   fin.get(c);
-  if(fin.eof()) return 0;
-  while((c >= 'A' && c <= 'Z') || c == '.' || c == ',' || c == '\\' || c == '[' 
-      || c == ']') {
-    tmp += c;
-    fin.get(c);
-  }
-  if(c == '\n') imode = 2;
-
-  mlen = tmp.length();
-  if(mlen == 0) {
+  if(c == '\n') {         // read '\n' first
     imode = 4;
     return 1;
   }
+  if(fin.eof()) return 0;
+  while(c != ' ' && c != '\n') {
+    tmp += c;
+    fin.get(c);
+  }
+
+  mlen = tmp.length();
+  if(c == '\n') imode = 2;
   if(mlen > 5) {
     fout << tmp;
     imode = 3;

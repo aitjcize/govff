@@ -24,9 +24,10 @@
 using std::string;
 
 int callback(void* fg, int argc, char **argv, char **ColName) {
-  (*static_cast<FileMg*>(fg)) << (argv[0]);
-  if((*static_cast<FileMg*>(fg)).imode == 2)
-    (*static_cast<FileMg*>(fg)) << "\n";
+  FileMg* tmp = static_cast<FileMg*>(fg);
+  *tmp << (argv[0]);
+  if(tmp->imode == 2)
+    *tmp << "\n";
   return 0;
 }
 
