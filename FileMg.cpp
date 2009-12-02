@@ -57,10 +57,10 @@ FileMg::~FileMg() {
 FileMg& FileMg::operator << (const char* chs) {
   fout << chs << std::flush;
   if(mode == 2) fout << '\n';
+  return (*this);
 }
 
 int FileMg::next(void) {
-  int count = 0;
   string tmp;
   char c;
   imode = 1;              // reset imode to 1
