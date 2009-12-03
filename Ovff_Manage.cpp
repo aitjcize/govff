@@ -20,14 +20,12 @@
 #include <string>
 #include <cstring>
 #include <stdexcept>
+#include <iostream>
 
 using std::string;
 
 int callback(void* fg, int argc, char **argv, char **ColName) {
-  FileMg* tmp = static_cast<FileMg*>(fg);
-  *tmp << (argv[0]);
-  if(tmp->imode == 2)
-    *tmp << "\n";
+  *static_cast<FileMg*>(fg) << (argv[0]);
   return 0;
 }
 
