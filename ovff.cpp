@@ -16,6 +16,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.  
  */
 
+#define VERSION "1.1"
+
 #include "FileMg.h"
 #include "Ovff_Manage.h"
 #include <iostream>
@@ -26,7 +28,7 @@ using std::endl;
 
 int main(int argc, char *argv[])
 {
-  if(argc == 1) {
+  if(argc != 2) {
     cout << "usage: ovff [file]" << endl;
     exit(1);
   }
