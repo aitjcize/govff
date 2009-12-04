@@ -26,7 +26,7 @@
 using std::string;
 using std::ios;
 
-void FileMg::initialize(const char* fname, bool md) {
+FileMg::FileMg(const char* fname, bool md) {
   mode = md;
   filename = fname;
   string outname;
@@ -41,12 +41,9 @@ void FileMg::initialize(const char* fname, bool md) {
   mlen = 0;
 }
 
-FileMg::FileMg(const char* fname, bool md) {
-  initialize(fname, md);
-}
-
 FileMg::FileMg(const FileMg& robj) {
-  initialize(robj.filename.c_str(), robj.mode);
+  throw std::runtime_error("Copy of class FileMg is not allowed, file can\
+ only be opened once at a time.");
 }
 
 FileMg::~FileMg() {

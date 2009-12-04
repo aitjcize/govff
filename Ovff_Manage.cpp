@@ -41,14 +41,8 @@ Ovff::Ovff(const char* d_name) {
 }
 
 Ovff::Ovff(const Ovff& robj) {
-  db_name = new char[strlen(robj.db_name) +1];
-  strcpy(db_name, robj.db_name);
-  int rc = sqlite3_open_v2(db_name, &db, SQLITE_OPEN_READONLY, NULL);
-  if(rc) {
-    string msg = "Ovff: can't open db - `" + string(db_name) + "'.";
-    sqlite3_close(db);
-    throw std::runtime_error(msg.c_str());
-  }
+  throw std::runtime_error("Copy of class Ovff is not allowed, database can\
+ only be opened once at a time.");
 }
 
 Ovff::~Ovff() {
