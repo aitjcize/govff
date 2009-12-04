@@ -79,30 +79,28 @@ int FileMg::next(void) {
   mlen = tmp.length();
   if(c == '\n') imode = 2;
   if(mlen > 5) {
-    fout << tmp << " ";
+    fout << tmp << c;
     imode = 3;
     return 1;            // not a ovff word, maybe english or something else
   }
 
-  if(mode == 0) {        // decode
-    for(int i = 0; i < mlen; i++) {
-      switch(tmp[i]) {
-        case '.':  m[i] = 56;  break;
-        case ',':  m[i] = 55;  break;
-        case '\'': m[i] = 27;  break;
-        case '[':  m[i] = 45;  break;
-        case ']':  m[i] = 46;  break;
-        default:   m[i] = tmp[i] - 64;
-      }
-      if((m[i] < 1 || m[i] > 26) && m[i] != 55 && m[i] != 56 && m[i] != 27
-          && m[i] != 45 && m[i] != 46) {
-        fout << tmp << " ";
-        imode = 3;
-        return 1;
-      }
+  for(int i = 0; i < mlen; i++) {
+    switch(tmp[i]) {
+      case '.':  m[i] = 56;  break;
+      case ',':  m[i] = 55;  break;
+      case '\'': m[i] = 27;  break;
+      case '[':  m[i] = 45;  break;
+      case ']':  m[i] = 46;  break;
+      default:   m[i] = tmp[i] - 64;
     }
-    make_syntax();
+    if((m[i] < 1 || m[i] > 26) && m[i] != 55 && m[i] != 56 && m[i] != 27
+        && m[i] != 45 && m[i] != 46) {
+      fout << tmp << c;
+      imode = 3;
+      return 1;
+    }
   }
+  make_syntax();
   return 1;
 }
 
