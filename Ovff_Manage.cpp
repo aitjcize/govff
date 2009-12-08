@@ -17,6 +17,7 @@
  */
 
 #include "Ovff_Manage.h"
+#include <sqlite3.h>
 #include <string>
 #include <cstring>
 #include <stdexcept>
@@ -33,8 +34,11 @@ Ovff::Ovff(const char* d_name) {
   db_name = new char[strlen(d_name) +1];
   strcpy(db_name, d_name);
   int rc = sqlite3_open_v2(db_name, &db, SQLITE_OPEN_READONLY, NULL);
+  if(rc)                // if failed, try /usr/share/$db_name
+    rc = sqlite3_open_v2((string("/usr/share/ovff/") + string(db_name)).c_str(),
+        &db, SQLITE_OPEN_READONLY, NULL);
   if(rc) {
-    string msg = "Ovff: can't open db - `" + string(db_name) + "'.";
+    string msg = "Can't open db - `" + string(db_name) + "'.";
     sqlite3_close(db);
     throw std::runtime_error(msg.c_str());
   }

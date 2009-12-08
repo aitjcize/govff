@@ -47,7 +47,6 @@ class FileMg {
     void initialize(const char* fname, bool md);
     void make_syntax(void);
     friend class Ovff;
-    friend int callback(void* fg, int argc, char **argv, char **ColName);
 
   public:
     FileMg(const char* fname, bool md);

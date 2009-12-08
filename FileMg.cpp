@@ -35,7 +35,13 @@ FileMg::FileMg(const char* fname, bool md) {
   else
     outname = outname + "e_" + filename;
   fin.open(filename.c_str());
+  if(!fin.is_open())
+    throw ios::failure(string("Error opening `") +  string(filename)
+        + string("'."));
   fout.open(outname.c_str());
+  if(!fout.is_open())
+    throw ios::failure(string("Error opening `") +  string(filename)
+        + string("'."));
   for(int i = 0; i < 5; i++)
     m[i] = 0;
   mlen = 0;

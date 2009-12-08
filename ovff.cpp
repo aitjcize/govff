@@ -16,12 +16,13 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.  
  */
 
-#define VERSION "1.1"
+#define VERSION "1.3"
 
 #include "FileMg.h"
 #include "Ovff_Manage.h"
 #include <iostream>
 #include <cstdlib>
+#include <stdexcept>
 
 using std::cout;
 using std::endl;
@@ -32,10 +33,16 @@ int main(int argc, char *argv[])
     cout << "usage: ovff [file]" << endl;
     exit(1);
   }
-  FileMg handle(argv[1], 0);
-  Ovff ovff("boshiamy_t.db");
-  while(handle.next())
-    ovff.query_and_write(handle);
-  cout << "Ok!" << endl;
+
+  try {
+    Ovff ovff("boshiamy_t.db");
+    FileMg handle(argv[1], 0);
+    while(handle.next())
+      ovff.query_and_write(handle);
+    cout << "Ok!" << endl;
+  }
+  catch(std::exception& ex) {
+    cout << "Ovff: " << ex.what() << endl;
+  }
   return 0;
 }
