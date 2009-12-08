@@ -63,11 +63,12 @@ int FileMg::next(void) {
   string tmp;
 
   fin.get(c);
+  if(fin.eof()) return 0; // exit if end of file
+
   if(c == '\n') {         // read '\n' first
     imode = 4;
     return 1;
   }
-  if(fin.eof()) return 0;
   while(c != ' ' && c != '\n') {
     tmp += c;
     fin.get(c);
