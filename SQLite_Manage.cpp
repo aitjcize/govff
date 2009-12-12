@@ -43,16 +43,14 @@ SQLiteMg::SQLiteMg(const char* d_name, char* argv) {
 
 #ifndef WIN32 // linux only
   if(rc) {
-    cout << "Can't open db - `" + db_path + "'." << endl;
     db_path = string("/usr/share/ovff/") + db_name;
-    cout << "Trying " << db_path << "..." << endl;
     sqlite3_close(db);
     rc = sqlite3_open_v2(db_path.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
   }
 #endif
 
   if(rc) {
-    string msg = "Can't open db - `" + db_path + "'.";
+    string msg = string("Can't find db - `") + d_name + "'.";
     sqlite3_close(db);
     throw std::runtime_error(msg.c_str());
   }
