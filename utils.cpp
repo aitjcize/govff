@@ -58,5 +58,6 @@ string dir_name(const char* cstr) {
 }
 
 string base_name(const char* cstr) {
-  string tmp(cstr); return tmp.substr(tmp.find_last_of(SEP) +1, tmp.length());
+  string tmp(cstr);
+  return tmp.substr(tmp.find_last_of(SEP) +1, tmp.length());
 }

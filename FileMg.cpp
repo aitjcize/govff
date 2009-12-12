@@ -74,8 +74,14 @@ int FileMg::next(void) {
     imode = 4;
     return 1;
   }
-  while(c != ' ' && c != '\n') {
+  while(c != ' ' && c != '\n' && !fin.eof()) {
     tmp += c;
+    if((c < 'A' || c > 'Z') && c != '.' && c != ',' && c != '\\'
+        && c != '[' && c != ']') {
+      fout << tmp;
+      imode = 3;
+      return 1;
+    }
     fin.get(c);
   }
 
@@ -87,7 +93,7 @@ int FileMg::next(void) {
     return 1;            // not a ovff word, maybe english or something else
   }
 
-  for(int i = 0; i < mlen; i++) {
+  for(int i = 0; i < mlen; i++) 
     switch(tmp[i]) {
       case '.':  m[i] = 56;  break;
       case ',':  m[i] = 55;  break;
@@ -96,13 +102,7 @@ int FileMg::next(void) {
       case ']':  m[i] = 46;  break;
       default:   m[i] = tmp[i] - 64;
     }
-    if((m[i] < 1 || m[i] > 26) && m[i] != 55 && m[i] != 56 && m[i] != 27
-        && m[i] != 45 && m[i] != 46) {
-      fout << tmp << c;
-      imode = 3;
-      return 1;
-    }
-  }
+
   make_syntax();
   return 1;
 }
