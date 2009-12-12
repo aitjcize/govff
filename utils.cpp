@@ -16,8 +16,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.  
  */
 
-#include "itoa.h"
+#include <string>
+#include "utils.h"
 #include <cmath>
+
+#ifdef WIN32
+  #define SEP "\\"
+#else
+  #define SEP "/"
+#endif
+
+
+using std::string;
 
 char* itoa(int num)
 {
@@ -42,4 +52,11 @@ char* itoa(int num)
   return cha;
 }
 
+string dir_name(const char* cstr) {
+  string tmp(cstr);
+  return tmp.substr(0, tmp.find_last_of(SEP) +1);
+}
 
+string base_name(const char* cstr) {
+  string tmp(cstr); return tmp.substr(tmp.find_last_of(SEP) +1, tmp.length());
+}

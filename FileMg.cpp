@@ -17,10 +17,8 @@
  */
 
 #include "FileMg.h"
-#include "itoa.h"
-#include <iostream>
+#include "utils.h"
 #include <fstream>
-#include <string>
 #include <stdexcept>
 
 using std::string;
@@ -28,19 +26,20 @@ using std::ios;
 
 FileMg::FileMg(const char* fname, bool md) {
   mode = md;
-  filename = fname;
-  string outname;
+  string dir = dir_name(fname);
+  filename = base_name(fname);
+  string outname = dir;
   if(mode == 0)
-    outname = outname + "d_" + filename;
+    outname += "d_" + filename;
   else
-    outname = outname + "e_" + filename;
-  fin.open(filename.c_str());
+    outname += "e_" + filename;
+  fin.open(fname);
   if(!fin.is_open())
     throw ios::failure(string("Error opening `") +  string(filename)
         + string("'."));
   fout.open(outname.c_str());
   if(!fout.is_open())
-    throw ios::failure(string("Error opening `") +  string(filename)
+    throw ios::failure(string("Error opening `") +  string(outname)
         + string("'."));
   for(int i = 0; i < 5; i++)
     m[i] = 0;

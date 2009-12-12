@@ -1,4 +1,4 @@
-objects = ovff.o Ovff_Manage.o FileMg.o itoa.o
+objects = ovff.o SQLite_Manage.o FileMg.o utils.o
 
 CFLAGS = -lsqlite3 -Wall
 

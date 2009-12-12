@@ -1,4 +1,4 @@
-/* Ovff_Manage.h
+/* SQLite_Manage.h
 
  * Copyright (C) 2009 -  Aitjcize <aitjcize@gmail.com>
  * All Rights reserved.
@@ -22,16 +22,16 @@
 #include "FileMg.h"
 #include <sqlite3.h>
 
-class Ovff {
+class SQLiteMg {
   private:
     char* db_name;
     sqlite3 *db;
     char* ErrMsg;
 
   public:
-    Ovff(const char* db_name);
-    Ovff(const Ovff& robj);
-    ~Ovff();
+    SQLiteMg(const char* db_name, char* argv);
+    SQLiteMg(const SQLiteMg& robj);
+    ~SQLiteMg();
     void query_and_write(FileMg& in);
     friend int callback(void* fg, int argc, char **argv, char **ColName);
 };

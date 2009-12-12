@@ -1,6 +1,6 @@
-/*  itoa.h
+/* utils.h
 
- * Copyright (C) 2009 -  Aitjcize <aitjcize@gmail.com>
+ * Copyright (C) 2009 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
  *
  * This program is free software; you can redistribute it and/or
@@ -16,9 +16,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.  
  */
 
-#ifndef ITOA_H
-#define ITOA_H
+#ifndef UTILS_H
+#define UTILS_H
+
+#include <string>
+using std::string;
 
 char* itoa(int num);
+string dir_name(const char* cstr);
+string base_name(const char* cstr);
 
 #endif

@@ -1,4 +1,4 @@
-/* Ovff_Manage.cpp
+/* SQLite_Manage.cpp
 
  * Copyright (C) 2009 -  Aitjcize <aitjcize@gmail.com>
  * All Rights reserved.
@@ -16,13 +16,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.  
  */
 
-#include "Ovff_Manage.h"
+#include "SQLite_Manage.h"
+#include "FileMg.h"
+#include "utils.h"
 #include <sqlite3.h>
 #include <string>
 #include <cstring>
 #include <stdexcept>
 #include <iostream>
 
+using std::cout;
+using std::endl;
 using std::string;
 
 int callback(void* fg, int argc, char **argv, char **ColName) {
@@ -30,31 +34,41 @@ int callback(void* fg, int argc, char **argv, char **ColName) {
   return 0;
 }
 
-Ovff::Ovff(const char* d_name) {
+SQLiteMg::SQLiteMg(const char* d_name, char* argv) {
   db_name = new char[strlen(d_name) +1];
   strcpy(db_name, d_name);
-  int rc = sqlite3_open_v2(db_name, &db, SQLITE_OPEN_READONLY, NULL);
-  if(rc)                // if failed, try /usr/share/$db_name
-    rc = sqlite3_open_v2((string("/usr/share/ovff/") + string(db_name)).c_str(),
-        &db, SQLITE_OPEN_READONLY, NULL);
+  string db_path(argv);
+  db_path = dir_name(db_path.c_str()) + db_name;
+  int rc = sqlite3_open_v2(db_path.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
+
+#ifndef WIN32 // linux only
   if(rc) {
-    string msg = "Can't open db - `" + string(db_name) + "'.";
+    cout << "Can't open db - `" + db_path + "'." << endl;
+    db_path = string("/usr/share/ovff/") + db_name;
+    cout << "Trying " << db_path << "..." << endl;
+    sqlite3_close(db);
+    rc = sqlite3_open_v2(db_path.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
+  }
+#endif
+
+  if(rc) {
+    string msg = "Can't open db - `" + db_path + "'.";
     sqlite3_close(db);
     throw std::runtime_error(msg.c_str());
   }
 }
 
-Ovff::Ovff(const Ovff& robj) {
-  throw std::runtime_error("Copy of class Ovff is not allowed, database can\
+SQLiteMg::SQLiteMg(const SQLiteMg& robj) {
+  throw std::runtime_error("Copy of class SQLiteMg is not allowed, database can\
  only be opened once at a time.");
 }
 
-Ovff::~Ovff() {
+SQLiteMg::~SQLiteMg() {
   delete db_name;
   sqlite3_close(db);
 }
 
-void Ovff::query_and_write(FileMg& in) {
+void SQLiteMg::query_and_write(FileMg& in) {
   if(in.imode == 3) return;
   if(in.imode == 4) {
     in << "\n";
@@ -62,7 +76,7 @@ void Ovff::query_and_write(FileMg& in) {
   }
   int rc = sqlite3_exec(db, in.query_syntax.c_str(), callback, &in, &ErrMsg);
   if(rc != SQLITE_OK) {
-    string msg = "Ovff: SQL error: " + string(ErrMsg);
+    string msg = "SQLiteMg: SQL error: " + string(ErrMsg);
     sqlite3_free(ErrMsg);
     throw std::runtime_error(msg.c_str());
   }

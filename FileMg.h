@@ -46,7 +46,7 @@ class FileMg {
     // private member functions;
     void initialize(const char* fname, bool md);
     void make_syntax(void);
-    friend class Ovff;
+    friend class SQLiteMg;
 
   public:
     FileMg(const char* fname, bool md);
