@@ -19,10 +19,14 @@
 #include "FileMg.h"
 #include "utils.h"
 #include <fstream>
-#include <stdexcept>
+#include <sstream>
+using std::ostringstream;
 
+#include <string>
 using std::string;
 using std::ios;
+
+#include <stdexcept>
 
 FileMg::FileMg(const char* fname, bool md) {
   mode = md;
@@ -108,12 +112,13 @@ int FileMg::next(void) {
 }
 
 void FileMg::make_syntax(void) {
-  string temp = "SELECT phrase FROM phrases WHERE ";
+  ostringstream packer;
+  packer << "SELECT phrase FROM phrases WHERE ";
   for(int i = 0; i < mlen; i++) {
-    temp += + "m" + string(itoa(i)) + "=" + string(itoa(m[i]));
+    packer << "m" << i << "=" << m[i];
     if(i != mlen -1)
-      temp += " AND ";
+      packer << " AND ";
   }
-  temp += " ORDER BY id LIMIT 1;";
-  query_syntax = temp;
+  packer << " ORDER BY id LIMIT 1;";
+  query_syntax = packer.str();
 }

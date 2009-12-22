@@ -22,7 +22,6 @@
 #include <string>
 using std::string;
 
-char* itoa(int num);
 string dir_name(const char* cstr);
 string base_name(const char* cstr);
 

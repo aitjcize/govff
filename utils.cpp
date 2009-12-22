@@ -18,7 +18,6 @@
 
 #include <string>
 #include "utils.h"
-#include <cmath>
 
 #ifdef WIN32
   #define SEP "\\"
@@ -28,29 +27,6 @@
 
 
 using std::string;
-
-char* itoa(int num)
-{
-  static char cha[64];
-  if(num == 0) {
-    cha[0] = '0';
-    cha[1] = 0;
-    return cha;
-  }
-  int tmp = 0;
-  tmp = (num < 0)? -num: num;
-  int digits = 0;
-  while(static_cast<int>(num / pow(10, digits)))
-    digits++;
-  for(int i = 0; i < digits; i++)
-  {
-    cha[digits -i -(num > 0)] = tmp % 10 +'0';
-    tmp /= 10;
-  }
-  if(num < 0) cha[0] = '-';
-  cha[digits +(num < 0)] = '\0';
-  return cha;
-}
 
 string dir_name(const char* cstr) {
   string tmp(cstr);
