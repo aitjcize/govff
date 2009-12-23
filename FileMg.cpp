@@ -71,22 +71,24 @@ int FileMg::next(void) {
   imode = 1;              // reset imode to 1
   string tmp;
 
-  fin.get(c);
-  if(fin.eof()) return 0; // exit if end of file
+  while(tmp.length() == 0) {
+    fin.get(c);
+    if(fin.eof()) return 0; // exit if end of file
 
-  if(c == '\n') {         // read '\n' first
-    imode = 4;
-    return 1;
-  }
-  while(c != ' ' && c != '\n' && !fin.eof()) {
-    tmp += c;
-    if((c < 'A' || c > 'Z') && c != '.' && c != ',' && c != '\\'
-        && c != '[' && c != ']') {
-      fout << tmp;
-      imode = 3;
+    if(c == '\n') {         // read '\n' first
+      imode = 4;
       return 1;
     }
-    fin.get(c);
+    while(c != ' ' && c != '\n' && !fin.eof()) {
+      tmp += c;
+      if((c < 'A' || c > 'Z') && c != '.' && c != ',' && c != '\\'
+          && c != '[' && c != ']') {
+        fout << tmp;
+        imode = 3;
+        return 1;
+      }
+      fin.get(c);
+    }
   }
 
   mlen = tmp.length();
