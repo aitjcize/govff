@@ -16,7 +16,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.  
  */
 
-#define VERSION "1.4.5"
+#define VERSION "1.5.0"
 
 #include "FileMg.h"
 #include "SQLite_Manage.h"
