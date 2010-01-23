@@ -26,17 +26,12 @@
 #include <stdexcept>
 
 using std::cout;
+using std::cin;
 using std::endl;
 
 int main(int argc, char *argv[])
 {
-  if(argc != 2) {
-    cout << "usage: ovff [file]" << endl;
-    cout << "       ovff -v" << endl;
-    exit(1);
-  }
-
-  if(!strcmp(argv[1], "-v")) {
+  if(argc > 1 && !strcmp(argv[1], "-v")) {
     cout << "Ovff 嘸蝦米翻譯程式 Ver. " << VERSION << endl;
     cout << "Copyright (C) 2009 Aitjcize (Wei-Ning Huang)\n\
 License GPLv2 <http://gnu.org/licenses/gpl.html>\n\
@@ -48,10 +43,9 @@ Written by Aitjcize (Wei-Ning Huang)." << endl;
   }
   try {
     SQLiteMg ovff("boshiamy_t.db", argv[0]);
-    FileMg handle(argv[1], 0);
+    FileMg handle(cin, cout, 0);
     while(handle.next())
       ovff.query_and_write(handle);
-    cout << "Ok!" << endl;
   }
   catch(std::exception& ex) {
     cout << "Ovff: " << ex.what() << endl;

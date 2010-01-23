@@ -1,9 +1,10 @@
 objects = ovff.o SQLite_Manage.o FileMg.o utils.o
 
-CFLAGS = -lsqlite3 -Wall
+CFLAGS = -lsqlite3 -O2 -Wall -g
 
 ovff: $(objects)
-	g++ -o ovff $(objects) $(CFLAGS)
+	$(CXX) -o ovff $(objects) $(CFLAGS)
+
 install:
 	mkdir -p /usr/share/ovff
 	cp ovff /usr/bin

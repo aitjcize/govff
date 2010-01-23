@@ -27,6 +27,7 @@ class SQLiteMg {
     char* db_name;
     sqlite3 *db;
     char* ErrMsg;
+    bool query_success;
 
   public:
     SQLiteMg(const char* db_name, char* argv);

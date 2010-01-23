@@ -30,7 +30,9 @@ using std::endl;
 using std::string;
 
 int callback(void* fg, int argc, char **argv, char **ColName) {
-  *static_cast<FileMg*>(fg) << (argv[0]);
+  FileMg* in = static_cast<FileMg*>(fg);
+  *in << (argv[0]);
+  in->query_orig.clear();
   return 0;
 }
 
@@ -67,9 +69,9 @@ SQLiteMg::~SQLiteMg() {
 }
 
 void SQLiteMg::query_and_write(FileMg& in) {
-  if(in.imode == 3) return;
-  if(in.imode == 4) {
-    in << "\n";
+  // ----- if no query syntax, the word is invalid, output then return -----
+  if(in.query_syntax.length() == 0) {
+    in << in.query_orig.c_str();
     return;
   }
   int rc = sqlite3_exec(db, in.query_syntax.c_str(), callback, &in, &ErrMsg);
@@ -78,4 +80,8 @@ void SQLiteMg::query_and_write(FileMg& in) {
     sqlite3_free(ErrMsg);
     throw std::runtime_error(msg.c_str());
   }
+  // ----- if query_orig is not cleared menas callback is not called, output
+  // original word then exit -----
+  if(in.query_orig.length() != 0)
+    in << in.query_orig.c_str() << " ";
 }

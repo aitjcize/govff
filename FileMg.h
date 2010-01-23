@@ -21,37 +21,31 @@
 
 #include <string>
 #include <fstream>
+#include <iostream>
 
 using std::string;
-using std::ifstream;
-using std::ofstream;
+using std::istream;
+using std::ostream;
 
 class FileMg {
   private:
-    string filename;
     bool mode;                // 0: decode, 1: encode
     string query_syntax;      // set by the `next' function
-    ifstream fin;
-    ofstream fout;
+    string query_orig;        // original query word
+    istream& in;
+    ostream& out;
     int m[5];
     int mlen;
-    int imode;
-    // imode:
-    //  1: normal, single word
-    //  2: single word with a nextline character
-    //  3: not a ovff word, maybe english or something else,
-    //     return without query
-    //  4: empty, print newline charactor
 
     // private member functions;
     void initialize(const char* fname, bool md);
     void make_syntax(void);
     friend class SQLiteMg;
+    friend int callback(void* fg, int argc, char **argv, char **ColName);
 
   public:
-    FileMg(const char* fname, bool md);
+    FileMg(istream& _in = std::cin, ostream& _out = std::cout, bool md = 0);
     FileMg(const FileMg& robj);
-    ~FileMg();
     FileMg& operator << (const char* chs);
     int next(void);
 };
