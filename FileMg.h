@@ -30,23 +30,25 @@ using std::ostream;
 class FileMg {
   private:
     bool mode;                // 0: decode, 1: encode
-    string query_syntax;      // set by the `next' function
+    string query_syntax;      // query syntax, set by make_syntax()
     string query_orig;        // original query word
     istream& in;
     ostream& out;
-    int m[5];
-    int mlen;
 
     // private member functions;
     void initialize(const char* fname, bool md);
-    void make_syntax(void);
+    void make_syntax(int* m, int mlen);
     friend class SQLiteMg;
     friend int callback(void* fg, int argc, char **argv, char **ColName);
+    int next_decode(void);
+    int next_encode(void);
 
   public:
-    FileMg(istream& _in = std::cin, ostream& _out = std::cout, bool md = 0);
+    FileMg(istream& _in = std::cin, ostream& _out = std::cout, bool md = 0):
+      in(_in), out(_out), mode(md) {}
     FileMg(const FileMg& robj);
     FileMg& operator << (const char* chs);
+    FileMg& operator << (const char ch);
     int next(void);
 };
 

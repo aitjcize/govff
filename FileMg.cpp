@@ -20,25 +20,13 @@
 #include "utils.h"
 #include <iostream>
 #include <sstream>
-using std::ostringstream;
-
 #include <string>
-using std::string;
-using std::ios;
-
 #include <stdexcept>
-
-FileMg::FileMg(std::istream& _in, std::ostream& _out, bool md):
-  in(_in), out(_out) {
-  mode = md;
-  for(int i = 0; i < 5; i++)
-    m[i] = 0;
-  mlen = 0;
-}
+using std::string;
 
 FileMg::FileMg(const FileMg& robj): in(std::cin), out(std::cout) {
-  throw std::runtime_error("Copy of class FileMg is not allowed, file can\
- only be opened once at a time.");
+  throw std::runtime_error("Copy of class FileMg is not allowed, file can \
+only be opened once at a time.");
 }
 
 FileMg& FileMg::operator << (const char* chs) {
@@ -46,8 +34,30 @@ FileMg& FileMg::operator << (const char* chs) {
   return (*this);
 }
 
+FileMg& FileMg::operator << (const char ch) {
+  out << ch;
+  return (*this);
+}
+
+/* @brief    next loader for encode and decode
+ * @param    
+ * @retval   
+ */
+
 int FileMg::next(void) {
+  if(mode == 0)
+    return next_decode();
+  else
+    return next_encode();
+}
+
+int FileMg::next_decode(void) {
+  const string seperators = " \t\n";
+  int mlen,             // text code array length
+      m[5];             // text code array
   char c;
+
+  // clear string content to reset status
   query_syntax.clear();
   query_orig.clear();
 
@@ -59,12 +69,12 @@ int FileMg::next(void) {
     return 0; 
   }
   // ----- if recieve '\n' return without query_syntax -----
-  if(c == '\n' || c == ' ') {
+  if(seperators.find(c, 0) != string::npos) {
     query_orig += c;
     return 1;
   }
 
-  while(c != ' ' && c != '\n' && !in.eof()) {
+  while(seperators.find(c, 0) == string::npos && !in.eof()) {
     query_orig += c;
     if((toupper(c) < 'A' || toupper(c) > 'Z') && c != '.' && c != ','
         && c != '\\' && c != '[' && c != ']')
@@ -92,18 +102,61 @@ int FileMg::next(void) {
       default:   m[i] = toupper(query_orig[i]) - 'A' + 1;
     }
 
-  make_syntax();
+  make_syntax(m, mlen);
   return 1;
 }
 
-void FileMg::make_syntax(void) {
-  ostringstream packer;
-  packer << "SELECT phrase FROM phrases WHERE ";
-  for(int i = 0; i < mlen; i++) {
-    packer << "m" << i << "=" << m[i];
-    if(i != mlen -1)
-      packer << " AND ";
+int FileMg::next_encode(void) {
+  const string seperators = " \t\n";
+  int phrase[4] = { 0 };      // for a single mbs
+  char c;
+
+  // clear string content to reset status
+  query_syntax.clear();
+  query_orig.clear();
+
+  in.get(c);
+
+  if(in.eof()) return 0;
+  if(c < 0)
+    in.putback(c);
+  else {
+    query_orig += c;
+    return 1;
   }
-  packer << " ORDER BY id LIMIT 1;";
+
+  for(int i = 0; i < 3; i++) {
+    in.get(c);
+    query_orig += c;
+    phrase[i] = c;
+    if(c > 0)
+      return 1;
+  }
+  make_syntax(phrase, 3);
+  return 1;
+}
+
+/* @brief    make syntax for sqlite3 query
+ * @param    text code array, text code array length
+ * @retval   none
+ */
+
+void FileMg::make_syntax(int* ptr, int len) {
+  std::ostringstream packer;
+  if(mode == 0) {
+    packer << "SELECT phrase FROM phrases WHERE ";
+    for(int i = 0; i < len; i++) {
+      packer << "m" << i << "=" << ptr[i];
+      if(i != len -1)
+        packer << " AND ";
+    }
+    packer << " ORDER BY id LIMIT 1;";
+  }
+  else {
+    packer << "SELECT m0,m1,m2,m3,m4 FROM phrases WHERE phrase='";
+    for(int i = 0; i < len; i++)
+      packer << static_cast<char>(ptr[i]);
+    packer << "' ORDER BY category LIMIT 1;";
+  }
   query_syntax = packer.str();
 }

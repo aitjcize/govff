@@ -34,7 +34,6 @@ class SQLiteMg {
     SQLiteMg(const SQLiteMg& robj);
     ~SQLiteMg();
     void query_and_write(FileMg& in);
-    friend int callback(void* fg, int argc, char **argv, char **ColName);
 };
 
 #endif

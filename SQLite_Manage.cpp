@@ -24,15 +24,32 @@
 #include <cstring>
 #include <stdexcept>
 #include <iostream>
+#include <cstdlib>      // for atoi()
 
-using std::cout;
-using std::endl;
 using std::string;
 
 int callback(void* fg, int argc, char **argv, char **ColName) {
-  FileMg* in = static_cast<FileMg*>(fg);
-  *in << (argv[0]);
-  in->query_orig.clear();
+  FileMg* file = static_cast<FileMg*>(fg);
+  if(file->mode == 0)
+    *file << (argv[0]);
+  else {
+    for(int i = 0; i < argc; i++)
+      if(argv[i] != NULL) {
+        char c = static_cast<char>(atoi(argv[i]));
+        switch(c) {
+          case 56: c = '.';  break;
+          case 55: c = ',';  break;
+          case 27: c = '\''; break;
+          case 45: c = '[';  break;
+          case 46: c = ']';  break;
+          default: c = c -1 + 'A';
+        }
+        *file << c;
+      }
+    *file << " ";
+  }
+  // ----- clear string to mark as proccessed ----- //
+  file->query_orig.clear();
   return 0;
 }
 
@@ -43,7 +60,7 @@ SQLiteMg::SQLiteMg(const char* d_name, char* argv) {
   db_path = dir_name(db_path.c_str()) + db_name;
   int rc = sqlite3_open_v2(db_path.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
 
-#ifndef WIN32 // linux only
+#ifdef __linux__
   if(rc) {
     db_path = string("/usr/share/ovff/") + db_name;
     sqlite3_close(db);
@@ -69,7 +86,8 @@ SQLiteMg::~SQLiteMg() {
 }
 
 void SQLiteMg::query_and_write(FileMg& in) {
-  // ----- if no query syntax, the word is invalid, output then return -----
+  // ----- if query syntax not set, the word is invalid, output the original
+  // text then return -----
   if(in.query_syntax.length() == 0) {
     in << in.query_orig.c_str();
     return;
