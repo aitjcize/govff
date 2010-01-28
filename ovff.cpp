@@ -1,11 +1,12 @@
-/* ovff.cpp
-
- * Copyright (C) 2009 -  Aitjcize <aitjcize@gmail.com>
+/**
+ * ovff.cpp
+ *
+ * Copyright (C) 2010 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
  *
  * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * version 2 as published by the Free Software Foundation.
+ * modify it under the terms of the GNU Library General Public
+ * License version 2 as published by the Free Software Foundation.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>.  
+ * along with this program. If not, see <http://www.gnu.org/licenses/>. 
  */
 
 #include "FileMg.h"
@@ -27,7 +28,7 @@
   #include <errno.h>
 #endif
 
-#define VERSION "1.5.0"
+#define VERSION "1.6.0"
 #define DB_NAME "boshiamy_t.db"
 
 using std::cout;
@@ -104,7 +105,7 @@ Please report bugs to Aitjcize <aitjcize@gmail.com>" << endl;
     }
   }
 
-  // ----- check if the input and output filename is the same ----- //
+  // ----- check if the input and output file are the same ----- //
   if(f_inputfile && f_outputfile && strcmp(pInfile, pOutfile) == 0) {
     cerr << "Input filname should difference from the output filename." << endl;
     exit(1);
@@ -121,7 +122,7 @@ Please report bugs to Aitjcize <aitjcize@gmail.com>" << endl;
     outfile.open(pOutfile);
     postream = &outfile;
   }
-  
+
   if(!infile) {
     cerr << "Failed to open `" << pInfile << "'." << endl;
 #ifdef __linux__

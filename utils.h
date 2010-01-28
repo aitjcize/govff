@@ -22,6 +22,12 @@
 #include <string>
 using std::string;
 
+#ifdef __linux__
+  #define SEP "/"
+#elif defined(WIN32)
+  #define SEP "\\"
+#endif
+
 string dir_name(const char* cstr);
 string base_name(const char* cstr);
 

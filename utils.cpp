@@ -19,13 +19,6 @@
 #include <string>
 #include "utils.h"
 
-#ifdef WIN32
-  #define SEP "\\"
-#else
-  #define SEP "/"
-#endif
-
-
 using std::string;
 
 string dir_name(const char* cstr) {
