@@ -47,7 +47,7 @@ class FileMg {
 
   public:
     FileMg(istream& _in = std::cin, ostream& _out = std::cout,
-        Mode md = EncodeMode): in(_in), out(_out), mode(md) {}
+        Mode md = EncodeMode): mode(md), in(_in), out(_out) {}
     FileMg(const FileMg& robj);
     FileMg& operator << (const char* chs);
     FileMg& operator << (const char ch);

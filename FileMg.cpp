@@ -83,14 +83,16 @@ int FileMg::next_decode(void) {
   }
 
   mlen = query_orig.length();
+  // ----- if mlen > 5, query_orig is not a valid word, return without
+  // query_syntax -----
+  if(mlen > 5) {
+    query_orig += c;
+    return 1;
+  }
+
   // ----- if the last character is '\n', put it back to the stream in order
   // to be output at the next query -----
   if(c == '\n') in.putback(c);
-
-  // ----- if mlen > 5, query_orig is not a valid word, return without
-  // query_syntax -----
-  if(mlen > 5)
-    return 1;
 
   for(int i = 0; i < mlen; i++) 
     switch(toupper(query_orig[i])) {

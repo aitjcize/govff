@@ -46,7 +46,7 @@ int callback(void* fg, int argc, char **argv, char **ColName) {
         }
         *file << c;
       }
-    *file << " ";
+    *file << ' ';
   }
   // ----- clear string to mark as proccessed ----- //
   file->query_orig.clear();
@@ -101,5 +101,5 @@ void SQLiteMg::query_and_write(FileMg& in) {
   // ----- if query_orig is not cleared menas callback is not called, output
   // original word then exit -----
   if(in.query_orig.length() != 0)
-    in << in.query_orig.c_str() << " ";
+    in << in.query_orig.c_str() << ' ';
 }
