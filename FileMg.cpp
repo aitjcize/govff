@@ -45,7 +45,7 @@ FileMg& FileMg::operator << (const char ch) {
  */
 
 int FileMg::next(void) {
-  if(mode == 0)
+  if(mode == DecodeMode)
     return next_decode();
   else
     return next_encode();
@@ -143,7 +143,7 @@ int FileMg::next_encode(void) {
 
 void FileMg::make_syntax(int* ptr, int len) {
   std::ostringstream packer;
-  if(mode == 0) {
+  if(mode == DecodeMode) {
     packer << "SELECT phrase FROM phrases WHERE ";
     for(int i = 0; i < len; i++) {
       packer << "m" << i << "=" << ptr[i];

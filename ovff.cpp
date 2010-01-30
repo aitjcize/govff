@@ -14,7 +14,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <http://www.gnu.org/licenses/>. 
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "FileMg.h"
@@ -37,12 +37,12 @@ using std::cin;
 using std::endl;
 
 // ----- global flags ----- //
-bool f_encode = false;
 bool f_inputfile = false;
 bool f_outputfile = false;
 
 int main(int argc, char *argv[])
 {
+  FileMg::Mode mode = FileMg::DecodeMode;
   char *pInfile, *pOutfile;
   std::ostream* postream = &cout;
   std::istream* pistream = &cin;
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     if(argv[i][0] == '-' && strlen(argv[i]) == 2)
       switch(argv[i][1]) {
         case 'e':
-          f_encode = true;
+          mode = FileMg::EncodeMode;
           break;
         case 'v':
           cout << "Ovff 嘸蝦米翻譯程式 Ver. " << VERSION << endl;
@@ -141,7 +141,7 @@ Please report bugs to Aitjcize <aitjcize@gmail.com>" << endl;
   // ----- main loop ----- //
   try {
     SQLiteMg ovff(DB_NAME, argv[0]);
-    FileMg handle(*pistream, *postream, f_encode);
+    FileMg handle(*pistream, *postream, mode);
     while(handle.next())
       ovff.query_and_write(handle);
   }

@@ -28,15 +28,17 @@ using std::istream;
 using std::ostream;
 
 class FileMg {
+  public:
+    typedef enum _mode { DecodeMode, EncodeMode } Mode;
+
   private:
-    bool mode;                // 0: decode, 1: encode
+    Mode mode;
     string query_syntax;      // query syntax, set by make_syntax()
     string query_orig;        // original query word
     istream& in;
     ostream& out;
 
     // private member functions;
-    void initialize(const char* fname, bool md);
     void make_syntax(int* m, int mlen);
     friend class SQLiteMg;
     friend int callback(void* fg, int argc, char **argv, char **ColName);
@@ -44,8 +46,8 @@ class FileMg {
     int next_encode(void);
 
   public:
-    FileMg(istream& _in = std::cin, ostream& _out = std::cout, bool md = 0):
-      in(_in), out(_out), mode(md) {}
+    FileMg(istream& _in = std::cin, ostream& _out = std::cout,
+        Mode md = EncodeMode): in(_in), out(_out), mode(md) {}
     FileMg(const FileMg& robj);
     FileMg& operator << (const char* chs);
     FileMg& operator << (const char ch);
