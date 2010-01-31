@@ -43,7 +43,7 @@ bool f_outputfile = false;
 int main(int argc, char *argv[])
 {
   FileMg::Mode mode = FileMg::DecodeMode;
-  char *pInfile, *pOutfile;
+  char *pInfile = 0, *pOutfile = 0;
   std::ostream* postream = &cout;
   std::istream* pistream = &cin;
   std::ifstream infile;
