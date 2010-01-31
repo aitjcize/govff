@@ -25,6 +25,10 @@ int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
 
+  QTranslator translator;
+  translator.load("govff");
+  app.installTranslator(&translator);
+
   QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
   QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
 

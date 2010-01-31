@@ -45,7 +45,7 @@ ovffGui::ovffGui(QWidget* parent, char* sArgv)
   loadFromFileButton->show();
   saveToFileButton = new QPushButton(tr("Save"));
   saveToFileButton->show();
-  aboutButton = new QPushButton("About");
+  aboutButton = new QPushButton(tr("About"));
   aboutButton->show();
 
   // ----- Connect singals and slots -----
@@ -70,7 +70,7 @@ ovffGui::ovffGui(QWidget* parent, char* sArgv)
   mainLayout->addWidget(textArea); 
   mainLayout->addLayout(button_layout);
   setLayout(mainLayout);
-  setWindowTitle("Ovff Liu IME Translate Program");
+  setWindowTitle(tr("Ovff Liu IME Translate Program"));
 }
 
 void ovffGui::TransToggle(void) {
@@ -119,7 +119,7 @@ void ovffGui::LoadFromFile(void) {
 
 void ovffGui::SaveToFile(void) {
   QString fileName = QFileDialog::getSaveFileName(this,
-      tr("Save text from file"), "",
+      tr("Save text to file"), "",
       tr("All Files (*)"));
   if(fileName.isEmpty())
     return;
@@ -141,7 +141,7 @@ void ovffGui::ClearText(void) {
 
 void ovffGui::About(void) {
   QMessageBox::about(this, tr("About"), tr("OVFF Liu Input Method \
-Translate Program\nby AZ (Wei-Ning Nuang) <aitjcize@gmail.com>"));
+Translate Program\nby AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
   return;
 }
 
