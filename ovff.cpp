@@ -28,7 +28,7 @@
   #include <errno.h>
 #endif
 
-#define VERSION "1.6.2"
+#define VERSION "1.7.0"
 #define DB_NAME "boshiamy_t.db"
 
 using std::cout;
