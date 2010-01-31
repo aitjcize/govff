@@ -18,11 +18,16 @@
  */
 
 #include <QtGui>
+#include <QTextCodec>
 #include "ovffGui.h"
 
 int main(int argc, char *argv[])
 {
   QApplication app(argc, argv);
+
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
+  QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
+
   ovffGui *govff = new ovffGui(0, argv[0]);
   govff->resize(640, 480);
   govff->show();

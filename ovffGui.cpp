@@ -74,9 +74,7 @@ ovffGui::ovffGui(QWidget* parent, char* sArgv)
 }
 
 void ovffGui::TransToggle(void) {
-  QTextCodec *codec = QTextCodec::codecForName("utf8");
-
-  QString inputText = textArea->toPlainText().toUtf8();
+  QString inputText = textArea->toPlainText();
   std::string inputText_string = inputText.toStdString();
   std::istringstream gin(inputText_string);
   std::ostringstream gout;
@@ -86,7 +84,7 @@ void ovffGui::TransToggle(void) {
     FileMg handle(gin, gout, nextMode);
     while(handle.next()) 
       ovff.query_and_write(handle);
-    textArea->setText(codec->toUnicode(gout.str().c_str()));
+    textArea->setText(QString().fromStdString(gout.str()));
   } catch(std::exception& ex) {
     QMessageBox::critical(this, tr("Error"), tr(ex.what()));
     QCoreApplication::exit(1);
@@ -101,8 +99,6 @@ void ovffGui::TransToggle(void) {
 }
 
 void ovffGui::LoadFromFile(void) {
-  QTextCodec *codec = QTextCodec::codecForName("utf8");
-
   QString fileName = QFileDialog::getOpenFileName(this,
       tr("Load text from file"), "",
       tr("All Files (*)"));
@@ -117,7 +113,7 @@ void ovffGui::LoadFromFile(void) {
       return;
     }
     fileText = file.readAll();
-    textArea->setText(codec->toUnicode(fileText.toStdString().c_str()));
+    textArea->setText(fileText);
   }
 }
 
@@ -134,7 +130,7 @@ void ovffGui::SaveToFile(void) {
           file.errorString());
       return;
     }
-    file.write(textArea->toPlainText().toUtf8());
+    file.write(textArea->toPlainText().toAscii());
   }
 }
 
