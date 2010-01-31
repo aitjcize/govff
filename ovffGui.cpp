@@ -19,16 +19,16 @@
 
 #include <QtGui>
 #include <QTextCodec>
+#include <QCoreApplication>
 #include <string>
 #include <sstream>
+#include <stdexcept>
 
 #include "ovffGui.h"
 #include "FileMg.h"
 #include "SQLite_Manage.h"
 
 #define DB_NAME "boshiamy_t.db"
-
-#include "../lib/sdebug.h"
 
 ovffGui::ovffGui(QWidget* parent, char* sArgv)
   : QWidget(parent), sourceArgv(sArgv), nextMode(FileMg::DecodeMode) {
@@ -81,11 +81,16 @@ void ovffGui::TransToggle(void) {
   std::istringstream gin(inputText_string);
   std::ostringstream gout;
 
-  SQLiteMg ovff(DB_NAME, sourceArgv);
-  FileMg handle(gin, gout, nextMode);
-  while(handle.next()) 
-    ovff.query_and_write(handle);
-  textArea->setText(codec->toUnicode(gout.str().c_str()));
+  try {
+    SQLiteMg ovff(DB_NAME, sourceArgv);
+    FileMg handle(gin, gout, nextMode);
+    while(handle.next()) 
+      ovff.query_and_write(handle);
+    textArea->setText(codec->toUnicode(gout.str().c_str()));
+  } catch(std::exception& ex) {
+    QMessageBox::critical(this, tr("Error"), tr(ex.what()));
+    QCoreApplication::exit(1);
+  }
 
   // Toggle next Mode
   if(nextMode == FileMg::DecodeMode)

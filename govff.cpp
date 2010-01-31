@@ -19,7 +19,6 @@
 
 #include <QtGui>
 #include "ovffGui.h"
-#define VERSION "1.7.0"
 
 int main(int argc, char *argv[])
 {
