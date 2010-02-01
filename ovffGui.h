@@ -20,7 +20,7 @@
 #ifndef OVFFGUI_H
 #define OVFFGUI_H
 
-#include <QWidget>
+#include <QtGui>
 #include "FileMg.h"
 
 QT_BEGIN_NAMESPACE

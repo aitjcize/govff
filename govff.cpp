@@ -18,7 +18,6 @@
  */
 
 #include <QtGui>
-#include <QTextCodec>
 #include "ovffGui.h"
 
 int main(int argc, char *argv[])

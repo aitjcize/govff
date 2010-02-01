@@ -18,8 +18,6 @@
  */
 
 #include <QtGui>
-#include <QTextCodec>
-#include <QCoreApplication>
 #include <string>
 #include <sstream>
 #include <stdexcept>
@@ -35,16 +33,16 @@ ovffGui::ovffGui(QWidget* parent, char* sArgv)
   QLabel* label = new QLabel(tr("Text:"));
   textArea = new QTextEdit;
 
-  toOvffButton = new QPushButton(tr("To OVFF"));
   toChineseButton = new QPushButton(tr("To Chinese"));
+  toOvffButton = new QPushButton(tr("To OVFF"));
   clearButton = new QPushButton(tr("Clear"));
   loadFromFileButton = new QPushButton(tr("Load"));
   saveToFileButton = new QPushButton(tr("Save"));
   aboutButton = new QPushButton(tr("About"));
 
   // ----- Connect singals and slots -----
-  connect(toOvffButton, SIGNAL(clicked()), this, SLOT(ToOvff()));
   connect(toChineseButton, SIGNAL(clicked()), this, SLOT(ToChinese()));
+  connect(toOvffButton, SIGNAL(clicked()), this, SLOT(ToOvff()));
   connect(clearButton, SIGNAL(clicked()), this, SLOT(ClearText()));
   connect(loadFromFileButton, SIGNAL(clicked()), this, SLOT(LoadFromFile()));
   connect(saveToFileButton, SIGNAL(clicked()), this, SLOT(SaveToFile()));
@@ -52,8 +50,8 @@ ovffGui::ovffGui(QWidget* parent, char* sArgv)
 
   // ----- Manage layout -----
   QHBoxLayout* button_layout = new QHBoxLayout;
-  button_layout->addWidget(toOvffButton);
   button_layout->addWidget(toChineseButton);
+  button_layout->addWidget(toOvffButton);
   button_layout->addWidget(clearButton);
   button_layout->addWidget(loadFromFileButton);
   button_layout->addWidget(saveToFileButton);
