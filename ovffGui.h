@@ -37,16 +37,17 @@ class ovffGui: public QWidget {
     ovffGui(QWidget* parent = 0, char* sArgv = NULL);
 
   public slots:
-    void TransToggle();
+    void ToOvff();
+    void ToChinese();
     void ClearText();
     void LoadFromFile();
     void SaveToFile();
     void About();
 
   private:
-    void updateInterface(void);
+    void TransToggle(FileMg::Mode mode = FileMg::DecodeMode);
+
     char* sourceArgv;
-    FileMg::Mode nextMode;
     QPushButton* toOvffButton;
     QPushButton* toChineseButton;
     QPushButton* clearButton;

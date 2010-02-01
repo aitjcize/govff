@@ -31,26 +31,20 @@
 #define DB_NAME "boshiamy_t.db"
 
 ovffGui::ovffGui(QWidget* parent, char* sArgv)
-  : QWidget(parent), sourceArgv(sArgv), nextMode(FileMg::DecodeMode) {
+  : QWidget(parent), sourceArgv(sArgv) {
   QLabel* label = new QLabel(tr("Text:"));
   textArea = new QTextEdit;
 
   toOvffButton = new QPushButton(tr("To OVFF"));
-  toOvffButton->hide();
   toChineseButton = new QPushButton(tr("To Chinese"));
-  toChineseButton->show();
   clearButton = new QPushButton(tr("Clear"));
-  clearButton->show();
   loadFromFileButton = new QPushButton(tr("Load"));
-  loadFromFileButton->show();
   saveToFileButton = new QPushButton(tr("Save"));
-  saveToFileButton->show();
   aboutButton = new QPushButton(tr("About"));
-  aboutButton->show();
 
   // ----- Connect singals and slots -----
-  connect(toOvffButton, SIGNAL(clicked()), this, SLOT(TransToggle()));
-  connect(toChineseButton, SIGNAL(clicked()), this, SLOT(TransToggle()));
+  connect(toOvffButton, SIGNAL(clicked()), this, SLOT(ToOvff()));
+  connect(toChineseButton, SIGNAL(clicked()), this, SLOT(ToChinese()));
   connect(clearButton, SIGNAL(clicked()), this, SLOT(ClearText()));
   connect(loadFromFileButton, SIGNAL(clicked()), this, SLOT(LoadFromFile()));
   connect(saveToFileButton, SIGNAL(clicked()), this, SLOT(SaveToFile()));
@@ -73,7 +67,15 @@ ovffGui::ovffGui(QWidget* parent, char* sArgv)
   setWindowTitle(tr("Ovff Liu IME Translate Program"));
 }
 
-void ovffGui::TransToggle(void) {
+void ovffGui::ToOvff(void) {
+  TransToggle(FileMg::EncodeMode);
+}
+
+void ovffGui::ToChinese(void) {
+  TransToggle(FileMg::DecodeMode);
+}
+
+void ovffGui::TransToggle(FileMg::Mode mode) {
   QString inputText = textArea->toPlainText();
   std::string inputText_string = inputText.toStdString();
   std::istringstream gin(inputText_string);
@@ -81,7 +83,7 @@ void ovffGui::TransToggle(void) {
 
   try {
     SQLiteMg ovff(DB_NAME, sourceArgv);
-    FileMg handle(gin, gout, nextMode);
+    FileMg handle(gin, gout, mode);
     while(handle.next()) 
       ovff.query_and_write(handle);
     textArea->setText(QString().fromStdString(gout.str()));
@@ -89,13 +91,6 @@ void ovffGui::TransToggle(void) {
     QMessageBox::critical(this, tr("Error"), tr(ex.what()));
     QCoreApplication::exit(1);
   }
-
-  // Toggle next Mode
-  if(nextMode == FileMg::DecodeMode)
-    nextMode = FileMg::EncodeMode;
-  else
-    nextMode = FileMg::DecodeMode;
-  updateInterface();
 }
 
 void ovffGui::LoadFromFile(void) {
@@ -143,15 +138,4 @@ void ovffGui::About(void) {
   QMessageBox::about(this, tr("About"), tr("OVFF Liu Input Method \
 Translate Program\nby AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
   return;
-}
-
-void ovffGui::updateInterface(void) {
-  if(nextMode == FileMg::DecodeMode) {
-    toOvffButton->hide();
-    toChineseButton->show();
-  }
-  else {
-    toOvffButton->show();
-    toChineseButton->hide();
-  }
 }
