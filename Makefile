@@ -227,7 +227,7 @@ moc_ovffGui.o: moc_ovffGui.cpp
 
 install:
 	mkdir /usr/share/ovff
-	cp -f boshiamy_t.db /usr/share/ovff
+	cp -f boshiamy_t.db COPYING AUTHORS README /usr/share/ovff
 	cp -f $(TARGET) $(TARGET2) /usr/bin
 
 uninstall:   FORCE
