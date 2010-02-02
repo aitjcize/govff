@@ -22,14 +22,11 @@
 #ifndef OVFFGUI_H
 #define OVFFGUI_H
 
-#include <QtGui>
+#include <QWidget>
+#include <QLabel>
+#include <QTextEdit>
+#include <QPushButton>
 #include "FileMg.h"
-
-QT_BEGIN_NAMESPACE
-class QLabel;
-class QTextEdit;
-class QPushButton;
-QT_END_NAMESPACE
 
 class ovffGui: public QWidget {
 
@@ -46,8 +43,13 @@ class ovffGui: public QWidget {
     void SaveToFile();
     void About();
 
+  protected:
+    // Reimplement of QWidget::closeEvent()
+    virtual void closeEvent(QCloseEvent *event);
+
   private:
     void TransToggle(FileMg::Mode mode = FileMg::DecodeMode);
+    int _SaveToFile();
 
     char* sourceArgv;
     QPushButton* toOvffButton;

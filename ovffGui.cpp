@@ -91,6 +91,7 @@ void ovffGui::TransToggle(FileMg::Mode mode) {
     QMessageBox::critical(this, tr("Error"), tr(ex.what()));
     QCoreApplication::exit(1);
   }
+  textArea->document()->setModified(true);
 }
 
 void ovffGui::LoadFromFile(void) {
@@ -100,33 +101,37 @@ void ovffGui::LoadFromFile(void) {
   if(fileName.isEmpty())
     return;
   else {
-    QString fileText;
     QFile file(fileName);
     if(!file.open(QIODevice::ReadOnly)) {
       QMessageBox::information(this, tr("Unable to open file"),
           file.errorString());
       return;
     }
-    fileText = file.readAll();
-    textArea->setText(fileText);
+    textArea->setText(file.readAll());
   }
 }
 
 void ovffGui::SaveToFile(void) {
+  _SaveToFile();
+  textArea->document()->setModified(false);
+}
+
+int ovffGui::_SaveToFile(void) {
   QString fileName = QFileDialog::getSaveFileName(this,
       tr("Save text to file"), "",
       tr("All Files (*)"));
   if(fileName.isEmpty())
-    return;
+    return true;
   else {
     QFile file(fileName);
     if(!file.open(QIODevice::WriteOnly)) {
       QMessageBox::information(this, tr("Unable to open file"),
           file.errorString());
-      return;
+      return true;
     }
     file.write(textArea->toPlainText().toAscii());
   }
+  return false;
 }
 
 void ovffGui::ClearText(void) {
@@ -137,5 +142,27 @@ void ovffGui::ClearText(void) {
 void ovffGui::About(void) {
   QMessageBox::about(this, tr("About"), tr("OVFF Liu Input Method \
 Translate Program\nby AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
+  return;
+}
+void ovffGui::closeEvent(QCloseEvent *event) {
+  if(textArea->toPlainText().length() && textArea->document()->isModified()) {
+    QMessageBox::StandardButton ret;
+    ret = QMessageBox::warning(this, tr("Warning"),
+        tr("The text area contains modified text.\n"
+          "Do you want to save it?"),
+        QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    if(ret == QMessageBox::Save) {
+      if(_SaveToFile() == false)
+        event->accept();
+      else
+        event->ignore();
+    }
+    else if(ret == QMessageBox::Cancel)
+      event->ignore();
+    else if(ret == QMessageBox::Discard)
+      event->accept();
+  }
+  else
+    event->accept();
   return;
 }
