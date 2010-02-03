@@ -27,11 +27,10 @@
 #include "ovffGui.h"
 #include "FileMg.h"
 #include "SQLite_Manage.h"
+#include "resource.h"
 
-#define DB_NAME "boshiamy_t.db"
-
-ovffGui::ovffGui(QWidget* parent, char* sArgv)
-  : QWidget(parent), sourceArgv(sArgv) {
+ovffGui::ovffGui(QWidget* parent)
+  : QWidget(parent) {
   QLabel* label = new QLabel(tr("Text:"));
   textArea = new QTextEdit;
 
@@ -82,7 +81,7 @@ void ovffGui::TransToggle(FileMg::Mode mode) {
   std::ostringstream gout;
 
   try {
-    SQLiteMg ovff(DB_NAME, sourceArgv);
+    SQLiteMg ovff(RESOURCE_PATH "database" SEP "boshiamy_t.db");
     FileMg handle(gin, gout, mode);
     while(handle.next()) 
       ovff.query_and_write(handle);
@@ -140,8 +139,12 @@ void ovffGui::ClearText(void) {
 }
 
 void ovffGui::About(void) {
-  QMessageBox::about(this, tr("About"), tr("OVFF Liu Input Method \
-Translate Program\nby AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
+  QMessageBox about(this);
+  about.setWindowTitle(tr("About"));
+  about.setText(tr("OVFF Liu Input Method Translate Program\n"
+        "by AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
+  about.setIconPixmap(QPixmap(":/images/govff.png"));
+  about.exec();
   return;
 }
 void ovffGui::closeEvent(QCloseEvent *event) {

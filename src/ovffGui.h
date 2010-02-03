@@ -33,7 +33,7 @@ class ovffGui: public QWidget {
   Q_OBJECT
 
   public:
-    ovffGui(QWidget* parent = 0, char* sArgv = NULL);
+    ovffGui(QWidget* parent = 0);
 
   public slots:
     void ToOvff();

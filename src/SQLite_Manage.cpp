@@ -21,17 +21,15 @@
 
 #include "SQLite_Manage.h"
 #include "FileMg.h"
-#include "utils.h"
 #include <sqlite3.h>
 #include <string>
 #include <cstring>
 #include <stdexcept>
-#include <iostream>
 #include <cstdlib>      // for atoi()
 
 using std::string;
 
-int callback(void* fg, int argc, char **argv, char **ColName) {
+int callback(void* fg, int argc, char **argv, char**) {
   FileMg* file = static_cast<FileMg*>(fg);
   if(file->mode == 0)
     *file << (argv[0]);
@@ -56,35 +54,21 @@ int callback(void* fg, int argc, char **argv, char **ColName) {
   return 0;
 }
 
-SQLiteMg::SQLiteMg(const char* d_name, char* argv) {
-  db_name = new char[strlen(d_name) +1];
-  strcpy(db_name, d_name);
-  string db_path(argv);
-  db_path = dir_name(db_path.c_str()) + db_name;
-  int rc = sqlite3_open_v2(db_path.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
-
-#ifdef __linux__
+SQLiteMg::SQLiteMg(const char* db_path) {
+  int rc = sqlite3_open_v2(db_path, &db, SQLITE_OPEN_READONLY, NULL);
   if(rc) {
-    db_path = string("/usr/share/ovff/") + db_name;
-    sqlite3_close(db);
-    rc = sqlite3_open_v2(db_path.c_str(), &db, SQLITE_OPEN_READONLY, NULL);
-  }
-#endif
-
-  if(rc) {
-    string msg = string("Can't find db - `") + d_name + "'.";
+    string msg = string("Can't find db - `") + db_path + "'.";
     sqlite3_close(db);
     throw std::runtime_error(msg.c_str());
   }
 }
 
-SQLiteMg::SQLiteMg(const SQLiteMg& robj) {
+SQLiteMg::SQLiteMg(const SQLiteMg&) {
   throw std::runtime_error("Copy of class SQLiteMg is not allowed, database can\
  only be opened once at a time.");
 }
 
 SQLiteMg::~SQLiteMg() {
-  delete db_name;
   sqlite3_close(db);
 }
 

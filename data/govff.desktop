@@ -1,0 +1,13 @@
+[Desktop Entry]
+Categories=Application;Office;
+Encoding=UTF-8
+Name=Govff Liu IME Translator
+Name[zh_TW]=Govff嘸蝦米翻譯機
+Exec=govff
+Icon=/usr/share/pixmaps/govff.png
+Type=Application
+Terminal=false
+GenericName=Govff Liu IME Translator
+GenericName[zh_TW]=Govff嘸蝦米翻譯機
+Comment=Govff Liu IME Translator
+Comment[zh_TW]=Govff嘸蝦米翻譯機

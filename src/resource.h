@@ -1,5 +1,5 @@
 /**
- * govff.cpp - Graphical interface for ovff
+ * resource.h
  *
  * Copyright (C) 2010 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
@@ -19,22 +19,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <QtGui>
-#include "ovffGui.h"
-
-int main(int argc, char *argv[])
-{
-  QApplication app(argc, argv);
-
-  QTranslator translator;
-  translator.load("govff");
-  app.installTranslator(&translator);
-
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
-  QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
-
-  ovffGui *govff = new ovffGui(0, argv[0]);
-  govff->resize(640, 480);
-  govff->show();
-  return app.exec();
-}
+#if defined(WIN32)
+  #define SEP "\\"
+#else
+  #define SEP "/"
+#endif

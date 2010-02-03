@@ -1,3 +1,15 @@
+#!/bin/bash
+
+qmake=`which qmake`
+
+echo -n "Generating makefiles... "
+cd src
+$qmake -config ovff -o Makefile.ovff
+$qmake -config govff -o Makefile.govff
+echo "Ok"
+cd ..
+
+cat << FILE > Makefile
 all: ovff govff
 
 ovff:
@@ -20,3 +32,6 @@ clean:
 distclean:
 	make -f -C src Makefile.ovff distclean qmake
 	make -f -C src Makefile.govff distclean qmake
+FILE
+
+echo "Now run make."

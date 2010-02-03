@@ -21,6 +21,7 @@
 
 #include "FileMg.h"
 #include "SQLite_Manage.h"
+#include "resource.h"
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
@@ -31,7 +32,6 @@
 #endif
 
 #define VERSION "1.7.1"
-#define DB_NAME "boshiamy_t.db"
 
 using std::cout;
 using std::cerr;
@@ -142,7 +142,7 @@ Please report bugs to Aitjcize <aitjcize@gmail.com>" << endl;
 
   // ----- main loop ----- //
   try {
-    SQLiteMg ovff(DB_NAME, argv[0]);
+    SQLiteMg ovff(RESOURCE_PATH "database" SEP "boshiamy_t.db");
     FileMg handle(*pistream, *postream, mode);
     while(handle.next())
       ovff.query_and_write(handle);

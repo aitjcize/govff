@@ -1,5 +1,5 @@
 /**
- * utils.cpp
+ * SQLite_Manage.cpp
  *
  * Copyright (C) 2010 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
@@ -19,17 +19,23 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <string>
-#include "utils.h"
+#ifndef OVFF_MANAGE_H
+#define OVFF_MANAGE_H
 
-using std::string;
+#include "FileMg.h"
+#include <sqlite3.h>
 
-string dir_name(const char* cstr) {
-  string tmp(cstr);
-  return tmp.substr(0, tmp.find_last_of(SEP) +1);
-}
+class SQLiteMg {
+  private:
+    sqlite3 *db;
+    char* ErrMsg;
+    bool query_success;
 
-string base_name(const char* cstr) {
-  string tmp(cstr);
-  return tmp.substr(tmp.find_last_of(SEP) +1, tmp.length());
-}
+  public:
+    SQLiteMg(const char* db_path);
+    SQLiteMg(const SQLiteMg& robj);
+    ~SQLiteMg();
+    void query_and_write(FileMg& in);
+};
+
+#endif

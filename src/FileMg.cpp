@@ -20,14 +20,13 @@
  */
 
 #include "FileMg.h"
-#include "utils.h"
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <stdexcept>
 using std::string;
 
-FileMg::FileMg(const FileMg& robj): in(std::cin), out(std::cout) {
+FileMg::FileMg(const FileMg&): in(std::cin), out(std::cout) {
   throw std::runtime_error("Copy of class FileMg is not allowed, file can \
 only be opened once at a time.");
 }

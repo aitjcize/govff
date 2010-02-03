@@ -4,78 +4,90 @@
 <context>
     <name>ovffGui</name>
     <message>
-        <location filename="ovffGui.cpp" line="35"/>
+        <location filename="../ovffGui.cpp" line="34"/>
         <source>Text:</source>
         <translation>請輸入文字(中文/嘸蝦米碼)</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="38"/>
+        <location filename="../ovffGui.cpp" line="38"/>
         <source>To OVFF</source>
         <translation>轉為嘸蝦米碼</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="40"/>
+        <location filename="../ovffGui.cpp" line="37"/>
         <source>To Chinese</source>
         <translation>轉為中文</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="42"/>
+        <location filename="../ovffGui.cpp" line="39"/>
         <source>Clear</source>
         <translation>清空</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="44"/>
+        <location filename="../ovffGui.cpp" line="40"/>
         <source>Load</source>
         <translation>載入</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="46"/>
+        <location filename="../ovffGui.cpp" line="41"/>
         <source>Save</source>
         <translation>儲存</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="73"/>
+        <location filename="../ovffGui.cpp" line="66"/>
         <source>Ovff Liu IME Translate Program</source>
         <translation>OVFF嘸蝦米翻譯程式</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="89"/>
+        <location filename="../ovffGui.cpp" line="90"/>
         <source>Error</source>
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="103"/>
+        <location filename="../ovffGui.cpp" line="98"/>
         <source>Load text from file</source>
         <translation>從檔案載入文字</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="104"/>
-        <location filename="ovffGui.cpp" line="123"/>
+        <location filename="../ovffGui.cpp" line="99"/>
+        <location filename="../ovffGui.cpp" line="121"/>
         <source>All Files (*)</source>
         <translation>所以檔案 (*)</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="111"/>
-        <location filename="ovffGui.cpp" line="129"/>
+        <location filename="../ovffGui.cpp" line="105"/>
+        <location filename="../ovffGui.cpp" line="127"/>
         <source>Unable to open file</source>
         <translation>無法開啟檔案</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="122"/>
+        <location filename="../ovffGui.cpp" line="120"/>
         <source>Save text to file</source>
         <translation>儲存文字為檔案</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="48"/>
-        <location filename="ovffGui.cpp" line="143"/>
+        <location filename="../ovffGui.cpp" line="149"/>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../ovffGui.cpp" line="150"/>
+        <source>The text area contains modified text.
+Do you want to save it?</source>
+        <translation>輸入區含有修改過但未儲存的文字
+你想要儲存嗎?</translation>
+    </message>
+    <message>
+        <location filename="../ovffGui.cpp" line="42"/>
+        <location filename="../ovffGui.cpp" line="142"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="ovffGui.cpp" line="143"/>
+        <location filename="../ovffGui.cpp" line="142"/>
         <source>OVFF Liu Input Method Translate Program
 by AZ (Wei-Ning Huang) &lt;aitjcize@gmail.com&gt;</source>
-	<translation>OVFF嘸蝦米翻譯程式
+        <translation>OVFF嘸蝦米翻譯程式
 by AZ (Wei-Ning Huang) &lt;aitjcize@gmail.com&gt;</translation>
     </message>
 </context>

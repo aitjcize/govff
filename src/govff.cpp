@@ -1,5 +1,5 @@
 /**
- * SQLite_Manage.cpp
+ * govff.cpp - Graphical interface for ovff
  *
  * Copyright (C) 2010 -  Wei-Ning Huang (AZ) <aitjcize@gmail.com>
  * All Rights reserved.
@@ -19,24 +19,22 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef OVFF_MANAGE_H
-#define OVFF_MANAGE_H
+#include <QtGui>
+#include "ovffGui.h"
 
-#include "FileMg.h"
-#include <sqlite3.h>
+int main(int argc, char *argv[])
+{
+  QApplication app(argc, argv);
 
-class SQLiteMg {
-  private:
-    char* db_name;
-    sqlite3 *db;
-    char* ErrMsg;
-    bool query_success;
+  QTranslator translator;
+  translator.load(":/translations/govff");
+  app.installTranslator(&translator);
 
-  public:
-    SQLiteMg(const char* db_name, char* argv);
-    SQLiteMg(const SQLiteMg& robj);
-    ~SQLiteMg();
-    void query_and_write(FileMg& in);
-};
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
+  QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
 
-#endif
+  ovffGui govff;
+  govff.resize(640, 480);
+  govff.show();
+  return app.exec();
+}
