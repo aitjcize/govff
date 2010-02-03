@@ -36,7 +36,7 @@
     <message>
         <location filename="../ovffGui.cpp" line="66"/>
         <source>Ovff Liu IME Translate Program</source>
-        <translation>OVFF嘸蝦米翻譯程式</translation>
+        <translation>OVFF嘸蝦米翻譯機</translation>
     </message>
     <message>
         <location filename="../ovffGui.cpp" line="90"/>
@@ -52,7 +52,7 @@
         <location filename="../ovffGui.cpp" line="99"/>
         <location filename="../ovffGui.cpp" line="121"/>
         <source>All Files (*)</source>
-        <translation>所以檔案 (*)</translation>
+        <translation>所有檔案 (*)</translation>
     </message>
     <message>
         <location filename="../ovffGui.cpp" line="105"/>
@@ -87,7 +87,7 @@ Do you want to save it?</source>
         <location filename="../ovffGui.cpp" line="142"/>
         <source>OVFF Liu Input Method Translate Program
 by AZ (Wei-Ning Huang) &lt;aitjcize@gmail.com&gt;</source>
-        <translation>OVFF嘸蝦米翻譯程式
+        <translation>OVFF嘸蝦米翻譯機
 by AZ (Wei-Ning Huang) &lt;aitjcize@gmail.com&gt;</translation>
     </message>
 </context>

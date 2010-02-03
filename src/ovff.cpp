@@ -31,7 +31,7 @@
   #include <errno.h>
 #endif
 
-#define VERSION "1.7.1"
+#define VERSION "1.9.0"
 
 using std::cout;
 using std::cerr;
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
           mode = FileMg::EncodeMode;
           break;
         case 'v':
-          cout << "Ovff 嘸蝦米翻譯程式 Ver. " << VERSION << endl;
+          cout << "OVFF嘸蝦米翻譯機 Ver. " << VERSION << endl;
           cout << "Copyright (C) 2009 Aitjcize (Wei-Ning Huang)\n\
 License GPLv2 <http://gnu.org/licenses/gpl.html>\n\
 This is free software: you are free to change and redistribute it.\n\
