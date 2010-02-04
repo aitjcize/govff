@@ -32,13 +32,13 @@
 ovffGui::ovffGui(QWidget* parent)
   : QWidget(parent) {
   QLabel* label = new QLabel(tr("Text:"));
-  textArea = new QTextEdit;
+  textArea = new QPlainTextEdit;
 
   toChineseButton = new QPushButton(tr("To Chinese"));
   toOvffButton = new QPushButton(tr("To OVFF"));
   clearButton = new QPushButton(tr("Clear"));
   loadFromFileButton = new QPushButton(tr("Load"));
-  saveToFileButton = new QPushButton(tr("Save"));
+  saveAsFileButton = new QPushButton(tr("Save As"));
   aboutButton = new QPushButton(tr("About"));
 
   // ----- Connect singals and slots -----
@@ -46,7 +46,7 @@ ovffGui::ovffGui(QWidget* parent)
   connect(toOvffButton, SIGNAL(clicked()), this, SLOT(ToOvff()));
   connect(clearButton, SIGNAL(clicked()), this, SLOT(ClearText()));
   connect(loadFromFileButton, SIGNAL(clicked()), this, SLOT(LoadFromFile()));
-  connect(saveToFileButton, SIGNAL(clicked()), this, SLOT(SaveToFile()));
+  connect(saveAsFileButton, SIGNAL(clicked()), this, SLOT(SaveAsFile()));
   connect(aboutButton, SIGNAL(clicked()), this, SLOT(About()));
 
   // ----- Manage layout -----
@@ -55,7 +55,7 @@ ovffGui::ovffGui(QWidget* parent)
   button_layout->addWidget(toOvffButton);
   button_layout->addWidget(clearButton);
   button_layout->addWidget(loadFromFileButton);
-  button_layout->addWidget(saveToFileButton);
+  button_layout->addWidget(saveAsFileButton);
   button_layout->addWidget(aboutButton);
 
   QVBoxLayout* mainLayout = new QVBoxLayout;
@@ -85,12 +85,13 @@ void ovffGui::TransToggle(FileMg::Mode mode) {
     FileMg handle(gin, gout, mode);
     while(handle.next()) 
       ovff.query_and_write(handle);
-    textArea->setText(QString().fromStdString(gout.str()));
+    textArea->setPlainText(QString().fromStdString(gout.str()));
   } catch(std::exception& ex) {
     QMessageBox::critical(this, tr("Error"), tr(ex.what()));
     QCoreApplication::exit(1);
   }
   textArea->document()->setModified(true);
+  UpdateClipboard();
 }
 
 void ovffGui::LoadFromFile(void) {
@@ -99,23 +100,22 @@ void ovffGui::LoadFromFile(void) {
       tr("All Files (*)"));
   if(fileName.isEmpty())
     return;
-  else {
-    QFile file(fileName);
-    if(!file.open(QIODevice::ReadOnly)) {
-      QMessageBox::information(this, tr("Unable to open file"),
-          file.errorString());
-      return;
-    }
-    textArea->setText(file.readAll());
+
+  QFile file(fileName);
+  if(!file.open(QIODevice::ReadOnly)) {
+    QMessageBox::information(this, tr("Unable to open file"),
+        file.errorString());
+    return;
   }
+  textArea->setPlainText(file.readAll());
 }
 
-void ovffGui::SaveToFile(void) {
-  _SaveToFile();
+void ovffGui::SaveAsFile(void) {
+  _SaveAsFile();
   textArea->document()->setModified(false);
 }
 
-int ovffGui::_SaveToFile(void) {
+int ovffGui::_SaveAsFile(void) {
   QString fileName = QFileDialog::getSaveFileName(this,
       tr("Save text to file"), "",
       tr("All Files (*)"));
@@ -147,6 +147,7 @@ void ovffGui::About(void) {
   about.exec();
   return;
 }
+
 void ovffGui::closeEvent(QCloseEvent *event) {
   if(textArea->toPlainText().length() && textArea->document()->isModified()) {
     QMessageBox::StandardButton ret;
@@ -155,7 +156,7 @@ void ovffGui::closeEvent(QCloseEvent *event) {
           "Do you want to save it?"),
         QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
     if(ret == QMessageBox::Save) {
-      if(_SaveToFile() == false)
+      if(_SaveAsFile() == false)
         event->accept();
       else
         event->ignore();
@@ -168,4 +169,13 @@ void ovffGui::closeEvent(QCloseEvent *event) {
   else
     event->accept();
   return;
+}
+
+void ovffGui::UpdateClipboard(void) {
+  QClipboard *clipboard = QApplication::clipboard();
+  clipboard->setText(textArea->toPlainText(), QClipboard::Clipboard);
+#ifdef Q_OS_LINUX
+  // Linux mouse selection clipboard support
+  clipboard->setText(textArea->toPlainText(), QClipboard::Selection);
+#endif
 }

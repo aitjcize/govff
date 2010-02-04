@@ -31,7 +31,7 @@
   #include <errno.h>
 #endif
 
-#define VERSION "1.9.0"
+#define VERSION "1.9.1"
 
 using std::cout;
 using std::cerr;

@@ -30,8 +30,8 @@
     </message>
     <message>
         <location filename="../ovffGui.cpp" line="41"/>
-        <source>Save</source>
-        <translation>儲存</translation>
+        <source>Save As</source>
+        <translation>儲存為...</translation>
     </message>
     <message>
         <location filename="../ovffGui.cpp" line="66"/>
@@ -44,18 +44,18 @@
         <translation>錯誤</translation>
     </message>
     <message>
-        <location filename="../ovffGui.cpp" line="98"/>
+        <location filename="../ovffGui.cpp" line="99"/>
         <source>Load text from file</source>
         <translation>從檔案載入文字</translation>
     </message>
     <message>
-        <location filename="../ovffGui.cpp" line="99"/>
+        <location filename="../ovffGui.cpp" line="100"/>
         <location filename="../ovffGui.cpp" line="121"/>
         <source>All Files (*)</source>
         <translation>所有檔案 (*)</translation>
     </message>
     <message>
-        <location filename="../ovffGui.cpp" line="105"/>
+        <location filename="../ovffGui.cpp" line="106"/>
         <location filename="../ovffGui.cpp" line="127"/>
         <source>Unable to open file</source>
         <translation>無法開啟檔案</translation>
@@ -66,12 +66,12 @@
         <translation>儲存文字為檔案</translation>
     </message>
     <message>
-        <location filename="../ovffGui.cpp" line="149"/>
+        <location filename="../ovffGui.cpp" line="154"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../ovffGui.cpp" line="150"/>
+        <location filename="../ovffGui.cpp" line="155"/>
         <source>The text area contains modified text.
 Do you want to save it?</source>
         <translation>輸入區含有修改過但未儲存的文字
@@ -79,12 +79,12 @@ Do you want to save it?</source>
     </message>
     <message>
         <location filename="../ovffGui.cpp" line="42"/>
-        <location filename="../ovffGui.cpp" line="142"/>
+        <location filename="../ovffGui.cpp" line="143"/>
         <source>About</source>
         <translation>關於</translation>
     </message>
     <message>
-        <location filename="../ovffGui.cpp" line="142"/>
+        <location filename="../ovffGui.cpp" line="144"/>
         <source>OVFF Liu Input Method Translate Program
 by AZ (Wei-Ning Huang) &lt;aitjcize@gmail.com&gt;</source>
         <translation>OVFF嘸蝦米翻譯機

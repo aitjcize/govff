@@ -24,7 +24,7 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QTextEdit>
+#include <QPlainTextEdit>
 #include <QPushButton>
 #include "FileMg.h"
 
@@ -40,7 +40,7 @@ class ovffGui: public QWidget {
     void ToChinese();
     void ClearText();
     void LoadFromFile();
-    void SaveToFile();
+    void SaveAsFile();
     void About();
 
   protected:
@@ -49,16 +49,17 @@ class ovffGui: public QWidget {
 
   private:
     void TransToggle(FileMg::Mode mode = FileMg::DecodeMode);
-    int _SaveToFile();
+    int _SaveAsFile();
+    void UpdateClipboard();
 
     char* sourceArgv;
     QPushButton* toOvffButton;
     QPushButton* toChineseButton;
     QPushButton* clearButton;
     QPushButton* loadFromFileButton;
-    QPushButton* saveToFileButton;
+    QPushButton* saveAsFileButton;
     QPushButton* aboutButton;
-    QTextEdit* textArea;
+    QPlainTextEdit* textArea;
 };
 
 #endif
