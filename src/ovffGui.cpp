@@ -28,6 +28,7 @@
 #include "FileMg.h"
 #include "SQLite_Manage.h"
 #include "resource.h"
+#include "utils.h"
 
 ovffGui::ovffGui(QWidget* parent)
   : QWidget(parent) {
@@ -95,6 +96,7 @@ void ovffGui::TransToggle(FileMg::Mode mode) {
 }
 
 void ovffGui::LoadFromFile(void) {
+  QTextCodec* codec = QTextCodec::codecForName("Big5-ETen");
   QString fileName = QFileDialog::getOpenFileName(this,
       tr("Load text from file"), "",
       tr("All Files (*)"));
@@ -107,7 +109,10 @@ void ovffGui::LoadFromFile(void) {
         file.errorString());
     return;
   }
-  textArea->setPlainText(file.readAll());
+  if(fileIsUtf8(fileName.toAscii()))
+    textArea->setPlainText(file.readAll());
+  else
+    textArea->setPlainText(codec->toUnicode(file.readAll()));
 }
 
 void ovffGui::SaveAsFile(void) {

@@ -1,3 +1,5 @@
 This program requiers a data base - boshiamy_t.db which is the property of Boshiamy Inc., so I can't not provide it in this software package. You can downlaod `boshiamy_t.db' from the official website of Boshiamy Inc.
 
-Node: boshaimy_t.db should be placed in the same directory with the executables or in '/usr/share/ovff'.
+Note: boshaimy_t.db should be placed in the same directory with the executables or in '/usr/share/ovff'.
+
+libchardetect.a is a static library built from the project - libchardetect <http://blog.linux.org.tw/~jserv/archives/001672.html> - Aport to C of "universalchardet", that is the encoding detector library of Mozilla.

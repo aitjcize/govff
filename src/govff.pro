@@ -4,7 +4,7 @@ INCLUDEPATH += .
 
 unix {
     DEFINES += RESOURCE_PATH='\'"/usr/share/ovff/"\''
-    LIBS    += -lsqlite3
+    LIBS    += -lsqlite3 lib/linux/libchardetect.a
 }
 
 win32 {
@@ -13,25 +13,26 @@ win32 {
     HEADERS += sqlite3.h
     SOURCES += sqlite3.c
     RC_FILE += icon.rc
+    LIBS    += lib/windows/libchardetect.a
 }
+
+HEADERS += FileMg.h SQLite_Manage.h resource.h utils.h libchardetect.h
+SOURCES += FileMg.cpp \
+	   SQLite_Manage.cpp \
+	   utils.cpp
 
 # Input
 ovff {
     TARGET = ovff
     CONFIG -= qt
-    HEADERS += FileMg.h SQLite_Manage.h resource.h
-    SOURCES += FileMg.cpp \
-	       ovff.cpp \
-	       SQLite_Manage.cpp
+    SOURCES += ovff.cpp
 }
 
 govff {
     TARGET = govff
     RESOURCES = resources.qrc
-    HEADERS += FileMg.h ovffGui.h SQLite_Manage.h resource.h
-    SOURCES += FileMg.cpp \
-	       govff.cpp \
-	       ovffGui.cpp \
-	       SQLite_Manage.cpp
+    HEADERS += ovffGui.h
+    SOURCES += govff.cpp \
+	       ovffGui.cpp
     TRANSLATIONS += translations/govff.ts
 }
