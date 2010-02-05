@@ -142,7 +142,7 @@ Please report bugs to Aitjcize <aitjcize@gmail.com>" << endl;
 
   // ----- main loop ----- //
   try {
-    SQLiteMg ovff(RESOURCE_PATH "database" SEP "boshiamy_t.db");
+    SQLiteMg ovff(RESOURCE_PATH "database" SEP DB_NAME);
     FileMg handle(*pistream, *postream, mode);
     while(handle.next())
       ovff.query_and_write(handle);

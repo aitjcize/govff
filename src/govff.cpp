@@ -30,8 +30,9 @@ int main(int argc, char *argv[])
   translator.load(":/translations/govff");
   app.installTranslator(&translator);
 
-  QTextCodec::setCodecForCStrings(QTextCodec::codecForLocale());
-  QTextCodec::setCodecForTr(QTextCodec::codecForLocale());
+  QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+  QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
 
   ovffGui govff;
   govff.resize(640, 480);

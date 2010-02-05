@@ -24,3 +24,5 @@
 #else
   #define SEP "/"
 #endif
+
+#define DB_NAME "boshiamy_t.db"

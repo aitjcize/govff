@@ -81,7 +81,7 @@ void ovffGui::TransToggle(FileMg::Mode mode) {
   std::ostringstream gout;
 
   try {
-    SQLiteMg ovff(RESOURCE_PATH "database" SEP "boshiamy_t.db");
+    SQLiteMg ovff(RESOURCE_PATH "database" SEP DB_NAME);
     FileMg handle(gin, gout, mode);
     while(handle.next()) 
       ovff.query_and_write(handle);

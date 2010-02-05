@@ -4,10 +4,15 @@ INCLUDEPATH += .
 
 unix {
     DEFINES += RESOURCE_PATH='\'"/usr/share/ovff/"\''
+    LIBS    += -lsqlite3
 }
 
 win32 {
     DEFIES += RESOURCE_PATH='""'
+    CONFIG -= debug_and_release
+    HEADERS += sqlite3.h
+    SOURCES += sqlite3.c
+    RC_FILE += icon.rc
 }
 
 # Input
@@ -18,7 +23,6 @@ ovff {
     SOURCES += FileMg.cpp \
 	       ovff.cpp \
 	       SQLite_Manage.cpp
-    LIBS	+= -lsqlite3
 }
 
 govff {
@@ -30,5 +34,4 @@ govff {
 	       ovffGui.cpp \
 	       SQLite_Manage.cpp
     TRANSLATIONS += translations/govff.ts
-    LIBS	+= -lsqlite3
 }

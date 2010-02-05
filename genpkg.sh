@@ -6,7 +6,7 @@ make clean
 cp -rf . ../govff-$version
 cd ../govff-$version
 make
-sudo checkinstall -D
+sudo checkinstall -D < input
 mv *.deb ../
 cd ../
 rm -rf govff-$version
