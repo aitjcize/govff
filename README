@@ -1,5 +1,9 @@
-This program requiers a data base - boshiamy_t.db which is the property of Boshiamy Inc., so I can't not provide it in this software package. You can downlaod `boshiamy_t.db' from the official website of Boshiamy Inc.
+gOVFF is a graphical interface for ovff - a translator that translate between boshiamy input method code and chinese characters.
 
-Note: boshaimy_t.db should be placed in the same directory with the executables or in '/usr/share/ovff'.
+libchardetect.a is a static library built from the project - libchardetect
+<http://blog.linux.org.tw/~jserv/archives/001672.html> - A port to C of
+"universalchardet", that is the encoding detector library of Mozilla.
 
-libchardetect.a is a static library built from the project - libchardetect <http://blog.linux.org.tw/~jserv/archives/001672.html> - Aport to C of "universalchardet", that is the encoding detector library of Mozilla.
+boshiamy.db database is from the opensource project "ibus-table-boshiamy" by
+Yu Yuwei <acevery@gmail.com> http://github.com/vicamo/ibus-table-boshiamy
+see src/database/README for more information.

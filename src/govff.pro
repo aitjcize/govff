@@ -8,8 +8,8 @@ unix {
 }
 
 win32 {
-    DEFIES += RESOURCE_PATH='""'
-    CONFIG -= debug_and_release
+    DEFINES += RESOURCE_PATH='""'
+    CONFIG  -= debug_and_release
     HEADERS += sqlite3.h
     SOURCES += sqlite3.c
     RC_FILE += icon.rc
