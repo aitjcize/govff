@@ -45,7 +45,8 @@ bool fileIsUtf8(const char* filename) {
   chardet_get_charset(det, encoding, CHARDET_MAX_ENCODING_NAME);
   chardet_destroy(det);
   fclose(fp);
-  if(string(encoding) == "UTF-8")
+
+  if(string(encoding) == "UTF-8" || encoding[0] == 0)
     return true;
   else
     return false;

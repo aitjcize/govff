@@ -16,7 +16,7 @@ win32 {
     LIBS    += lib/windows/libchardetect.a
 }
 
-HEADERS += FileMg.h SQLite_Manage.h resource.h utils.h libchardetect.h
+HEADERS += FileMg.h SQLite_Manage.h resource.h utils.h chardetect.h
 SOURCES += FileMg.cpp \
 	   SQLite_Manage.cpp \
 	   utils.cpp
