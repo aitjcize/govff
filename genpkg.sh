@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=`grep -m 1 VERSION src/ovff.cpp | awk '{ print $3 }' | sed 's/"//g'`
+version=`grep -m 1 VERSION src/resource.h | awk '{ print $3 }' | sed 's/"//g'`
 
 make clean
 cp -rf . ../govff-$version

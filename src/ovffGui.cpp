@@ -146,8 +146,9 @@ void ovffGui::ClearText(void) {
 void ovffGui::About(void) {
   QMessageBox about(this);
   about.setWindowTitle(tr("About"));
-  about.setText(tr("OVFF Liu Input Method Translate Program\n"
-        "by AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
+  about.setText(tr("OVFF Liu Input Method Translate Program"
+        "\nby AZ (Wei-Ning Huang) <aitjcize@gmail.com>"));
+  about.setInformativeText("Ver. " VERSION);
   about.setIconPixmap(QPixmap(":/images/govff.png"));
   about.exec();
   return;

@@ -19,6 +19,8 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#define VERSION "1.9.7"
+
 #if defined(WIN32)
   #define SEP "\\"
 #else
