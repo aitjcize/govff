@@ -31,7 +31,7 @@ using std::string;
 
 int callback(void* fg, int argc, char **argv, char**) {
   FileMg* file = static_cast<FileMg*>(fg);
-  if(file->mode == 0)
+  if(file->getMode() == FileMg::DecodeMode)
     *file << (argv[0]);
   else {
     for(int i = 0; i < argc; i++)
@@ -50,7 +50,7 @@ int callback(void* fg, int argc, char **argv, char**) {
     *file << ' ';
   }
   // ----- clear string to mark as proccessed ----- //
-  file->query_orig.clear();
+  file->r_query_orig().clear();
   return 0;
 }
 
@@ -75,18 +75,18 @@ SQLiteMg::~SQLiteMg() {
 void SQLiteMg::query_and_write(FileMg& in) {
   // ----- if query syntax not set, the word is invalid, output the original
   // text then return -----
-  if(in.query_syntax.length() == 0) {
-    in << in.query_orig.c_str();
+  if(in.r_query_syntax().length() == 0) {
+    in << in.r_query_orig().c_str();
     return;
   }
-  int rc = sqlite3_exec(db, in.query_syntax.c_str(), callback, &in, &ErrMsg);
+  int rc = sqlite3_exec(db, in.r_query_syntax().c_str(), callback, &in,&ErrMsg);
   if(rc != SQLITE_OK) {
     string msg = "SQLiteMg: SQL error: " + string(ErrMsg);
     sqlite3_free(ErrMsg);
     throw std::runtime_error(msg.c_str());
   }
-  // ----- if query_orig is not cleared menas callback is not called, output
-  // original word then exit -----
-  if(in.query_orig.length() != 0)
-    in << in.query_orig.c_str() << ' ';
+  // ----- if r_query_orig() is not cleared means callback was not called,
+  // output original word then exit -----
+  if(in.r_query_orig().length() != 0)
+    in << in.r_query_orig().c_str() << ' ';
 }

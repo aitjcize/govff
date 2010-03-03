@@ -59,18 +59,17 @@ int FileMg::next_decode(void) {
       m[5];             // text code array
   char c;
 
-  // clear string content to reset status
+  // ----- clear string content to reset status ----- //
   query_syntax.clear();
   query_orig.clear();
 
   in.get(c);
 
-  // ----- return 0 if reach end of file -----
-  if(in.eof()) {
-    query_orig += c;
+  // ----- return 0 if reach end of file ----- //
+  if(in.eof())
     return 0; 
-  }
-  // ----- if recieve '\n' return without query_syntax -----
+
+  // ----- if recieve '\n' return without query_syntax ----- //
   if(seperators.find(c, 0) != string::npos) {
     query_orig += c;
     return 1;

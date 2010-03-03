@@ -43,8 +43,6 @@ class FileMg {
 
     // private member functions;
     void make_syntax(int* m, int mlen);
-    friend class SQLiteMg;
-    friend int callback(void* fg, int argc, char **argv, char **ColName);
     int next_decode(void);
     int next_encode(void);
 
@@ -55,6 +53,9 @@ class FileMg {
     FileMg& operator << (const char* chs);
     FileMg& operator << (const char ch);
     int next(void);
+    Mode getMode(void) { return mode; }
+    string& r_query_syntax(void) { return query_syntax; }
+    string& r_query_orig(void) { return query_orig; }
 };
 
 #endif
