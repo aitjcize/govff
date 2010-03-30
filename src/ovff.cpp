@@ -57,8 +57,9 @@ int main(int argc, char *argv[])
           break;
         case 'v':
           cout << "OVFF嘸蝦米翻譯機 Ver. " << VERSION << endl;
-          cout << "Copyright (C) 2009 Aitjcize (Wei-Ning Huang)\n\
-License GPLv2 <http://gnu.org/licenses/gpl.html>\n\
+          cout << "Copyright (C) 2010 Aitjcize (Wei-Ning Huang)\n\
+License GPLv3+: GNU GPL version 3 or later \
+<http://gnu.org/licenses/gpl.html>.\n\
 This is free software: you are free to change and redistribute it.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\n\
 Written by Aitjcize (Wei-Ning Huang)." << endl;
