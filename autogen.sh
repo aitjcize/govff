@@ -10,6 +10,8 @@ echo "Ok"
 cd ..
 
 cat << FILE > Makefile
+prefix ?= /usr
+
 all: ovff govff
 
 ovff:
@@ -18,12 +20,12 @@ govff:
 	make -C src -f Makefile.govff
 
 install:
-	cp -f src/ovff /usr/bin
-	cp -f src/govff /usr/bin
-	mkdir -p /usr/share/ovff
-	cp -rf src/database /usr/share/ovff
-	cp -f data/govff.png /usr/share/pixmaps
-	cp -f data/govff.desktop /usr/share/applications
+	install -m 755 src/ovff \$(prefix)/bin
+	install -m 755 src/govff \$(prefix)/bin
+	mkdir -p \$(prefix)/share/ovff/database
+	install -m 644 src/database/boshiamy.db \$(prefix)/share/ovff
+	install -m 644 data/govff.png \$(prefix)/share/pixmaps
+	install -m 644 data/govff.desktop \$(prefix)/share/applications
 
 clean:              
 	make -C src -f Makefile.ovff clean
