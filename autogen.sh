@@ -20,15 +20,11 @@ govff:
 	make -C src -f Makefile.govff
 
 install:
-	mkdir -p \$(prefix)/bin
-	install -m 755 src/ovff \$(prefix)/bin/ovff
-	install -m 755 src/govff \$(prefix)/bin/govff
-	mkdir -p \$(prefix)/share/ovff/database
-	install -m 644 src/database/boshiamy.db \$(prefix)/share/ovff/database/boshiamy.db
-	mkdir -p \$(prefix)/share/pixmaps
-	install -m 644 data/govff.png \$(prefix)/share/pixmaps/govff.png
-	mkdir -p \$(prefix)/share/applications
-	install -m 644 data/govff.desktop \$(prefix)/share/applications/govff.desktop
+	install -D -m 755 src/ovff \$(prefix)/bin/ovff
+	install -D -m 755 src/govff \$(prefix)/bin/govff
+	install -D -m 644 src/database/boshiamy.db \$(prefix)/share/ovff/database/boshiamy.db
+	install -D -m 644 data/govff.png \$(prefix)/share/pixmaps/govff.png
+	install -D -m 644 data/govff.desktop \$(prefix)/share/applications/govff.desktop
 
 clean:              
 	make -C src -f Makefile.ovff clean
