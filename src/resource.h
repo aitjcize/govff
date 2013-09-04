@@ -19,7 +19,7 @@
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#define VERSION "2.0.2"
+#define VERSION "2.1.0"
 
 #if defined(WIN32)
   #define SEP "\\"

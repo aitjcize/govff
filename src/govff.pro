@@ -4,7 +4,7 @@ INCLUDEPATH += .
 
 unix {
     DEFINES += RESOURCE_PATH='\'"/usr/share/ovff/"\''
-    LIBS    += -L./lib/linux -lsqlite3 -lchardetect
+    LIBS    += -L./lib/linux -lsqlite3 -luchardet
 }
 
 win32 {
@@ -13,10 +13,10 @@ win32 {
     HEADERS += sqlite3.h
     SOURCES += sqlite3.c
     RC_FILE += icon.rc
-    LIBS    += -L./lib/windows -lchardetect
+    LIBS    += -L./lib/windows -luchardet
 }
 
-HEADERS += FileMg.h SQLite_Manage.h resource.h utils.h chardetect.h
+HEADERS += FileMg.h SQLite_Manage.h resource.h utils.h
 SOURCES += FileMg.cpp \
 	   SQLite_Manage.cpp \
 	   utils.cpp

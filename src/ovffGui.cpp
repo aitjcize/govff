@@ -96,23 +96,25 @@ void ovffGui::TransToggle(FileMg::Mode mode) {
 }
 
 void ovffGui::LoadFromFile(void) {
-  QTextCodec* codec = QTextCodec::codecForName("Big5-ETen");
   QString fileName = QFileDialog::getOpenFileName(this,
       tr("Load text from file"), "",
       tr("All Files (*)"));
-  if(fileName.isEmpty())
+  if (fileName.isEmpty())
     return;
 
   QFile file(fileName);
-  if(!file.open(QIODevice::ReadOnly)) {
+  if (!file.open(QIODevice::ReadOnly)) {
     QMessageBox::information(this, tr("Unable to open file"),
         file.errorString());
     return;
   }
-  if(fileIsUtf8(fileName.toAscii()))
-    textArea->setPlainText(file.readAll());
-  else
+
+  if (fileIsBig5(fileName.toAscii())) {
+    QTextCodec* codec = QTextCodec::codecForName("Big5-ETen");
     textArea->setPlainText(codec->toUnicode(file.readAll()));
+  } else {
+    textArea->setPlainText(file.readAll());
+  }
 }
 
 void ovffGui::SaveAsFile(void) {
@@ -124,11 +126,11 @@ int ovffGui::_SaveAsFile(void) {
   QString fileName = QFileDialog::getSaveFileName(this,
       tr("Save text to file"), "",
       tr("All Files (*)"));
-  if(fileName.isEmpty())
+  if (fileName.isEmpty())
     return true;
   else {
     QFile file(fileName);
-    if(!file.open(QIODevice::WriteOnly)) {
+    if (!file.open(QIODevice::WriteOnly)) {
       QMessageBox::information(this, tr("Unable to open file"),
           file.errorString());
       return true;
@@ -155,21 +157,21 @@ void ovffGui::About(void) {
 }
 
 void ovffGui::closeEvent(QCloseEvent *event) {
-  if(textArea->toPlainText().length() && textArea->document()->isModified()) {
+  if (textArea->toPlainText().length() && textArea->document()->isModified()) {
     QMessageBox::StandardButton ret;
     ret = QMessageBox::warning(this, tr("Warning"),
         tr("The text area contains modified text.\n"
           "Do you want to save it?"),
         QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-    if(ret == QMessageBox::Save) {
-      if(_SaveAsFile() == false)
+    if (ret == QMessageBox::Save) {
+      if (_SaveAsFile() == false)
         event->accept();
       else
         event->ignore();
     }
-    else if(ret == QMessageBox::Cancel)
+    else if (ret == QMessageBox::Cancel)
       event->ignore();
-    else if(ret == QMessageBox::Discard)
+    else if (ret == QMessageBox::Discard)
       event->accept();
   }
   else

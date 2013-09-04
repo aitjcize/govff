@@ -22,8 +22,6 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "chardetect.h"
-
-bool fileIsUtf8(const char* filename);
+bool fileIsBig5(const char* filename);
 
 #endif

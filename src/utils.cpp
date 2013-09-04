@@ -20,34 +20,38 @@
  */
 
 #include "utils.h"
-#include "chardetect.h"
+
 #include <string>
 #include <stdexcept>
 #include <cstdio>
 
+#include <uchardet/uchardet.h>
+
 using std::string;
 
-bool fileIsUtf8(const char* filename) {
-  char buf[4096], encoding[CHARDET_MAX_ENCODING_NAME];
+bool fileIsBig5(const char* filename) {
+  char buf[4096];
   size_t len = 0;
   int res = 0;
   FILE* fp = fopen(filename, "rb");
-  if(fp == NULL)
-    throw
-      std::runtime_error(((string("can't open `") + filename + "'.")).c_str());
-  chardet_t det = NULL;
-  chardet_create(&det);
+
+  if (fp == NULL)
+    throw std::runtime_error(string("can't open `") + filename + "'.");
+
+  uchardet_t det = uchardet_new();
+
   do {
     len = fread(buf, 1, sizeof(buf), fp);
-    res = chardet_handle_data(det, buf, len);
-  } while ((res == CHARDET_RESULT_OK) && (feof(fp) == 0));
-  chardet_data_end(det);
-  chardet_get_charset(det, encoding, CHARDET_MAX_ENCODING_NAME);
-  chardet_destroy(det);
+    res = uchardet_handle_data(det, buf, len);
+  } while ((res == 0) && (feof(fp) == 0));
+
+  uchardet_data_end(det);
+
+  const char* charset = uchardet_get_charset(det);
+  bool result = (string(charset) == "Big5");
+  uchardet_delete(det);
+
   fclose(fp);
 
-  if(string(encoding) == "UTF-8" || encoding[0] == 0)
-    return true;
-  else
-    return false;
+  return result;
 }

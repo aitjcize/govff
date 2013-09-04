@@ -1,6 +1,6 @@
 #!/bin/bash
 
-qmake=`which qmake`
+qmake=`which qmake-qt4`
 
 echo -n "Generating makefiles... "
 cd src
