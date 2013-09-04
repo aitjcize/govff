@@ -1,16 +1,16 @@
 #!/bin/bash
 
-qmake=`which qmake-qt4`
+QMAKE=`which qmake-qt4`
 
 echo -n "Generating makefiles... "
 cd src
-$qmake -config ovff -o Makefile.ovff
-$qmake -config govff -o Makefile.govff
+$QMAKE -config ovff -o Makefile.ovff
+$QMAKE -config govff -o Makefile.govff
 echo "Ok"
 cd ..
 
 cat << FILE > Makefile
-prefix ?= /usr
+PREFIX ?= /usr
 
 all: ovff govff
 
@@ -20,11 +20,11 @@ govff:
 	make -C src -f Makefile.govff
 
 install:
-	install -D -m 755 src/ovff \$(prefix)/bin/ovff
-	install -D -m 755 src/govff \$(prefix)/bin/govff
-	install -D -m 644 src/database/boshiamy.db \$(prefix)/share/ovff/database/boshiamy.db
-	install -D -m 644 data/govff.png \$(prefix)/share/pixmaps/govff.png
-	install -D -m 644 data/govff.desktop \$(prefix)/share/applications/govff.desktop
+	install -D -m 755 src/ovff \$(PREFIX)/bin/ovff
+	install -D -m 755 src/govff \$(PREFIX)/bin/govff
+	install -D -m 644 src/database/boshiamy.db \$(PREFIX)/share/ovff/database/boshiamy.db
+	install -D -m 644 data/govff.png \$(PREFIX)/share/pixmaps/govff.png
+	install -D -m 644 data/govff.desktop \$(PREFIX)/share/applications/govff.desktop
 
 clean:              
 	make -C src -f Makefile.ovff clean

@@ -2,6 +2,14 @@ TEMPLATE = app
 DEPENDPATH += .
 INCLUDEPATH += .
 
+MOC_DIR = .build
+UI_DIR = .build
+RCC_DIR = .build
+OBJECTS_DIR = .build
+BUILD_DIR = .build
+
+DESTDIR = ../bin
+
 unix {
     DEFINES += RESOURCE_PATH='\'"/usr/share/ovff/"\''
     LIBS    += -L./lib/linux -lsqlite3 -luchardet
