@@ -8,3 +8,5 @@
 
 ## 備註
 嘸蝦米字根資料庫 boshiamy.db 是來自開放源碼專案 [ibus-table-boshiamy](http://github.com/vicamo/ibus-table-boshiamy/)
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/d6e793fdcf4a95774254adf6d0824e58 "githalytics.com")](http://githalytics.com/aitjcize/govff)
