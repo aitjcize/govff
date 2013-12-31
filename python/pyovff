@@ -158,7 +158,7 @@ def ovff_encode(inFile = sys.stdin, outFile = sys.stdout):
     '''
     encode chinese characters from inFile and output to outFile
     '''
-    n = preprocess(list(inFile.read()))
+    n = preprocess(list(unicode(inFile.read(), 'utf8')))
     inFile.close()
     sqlHandle = sqlite3.connect(database)
     sqlHandle.text_factory = str
@@ -171,8 +171,8 @@ def ovff_encode(inFile = sys.stdin, outFile = sys.stdout):
             outFile.write(i)
             continue
 
-        query_str = "SELECT m0,m1,m2,m3,m4 FROM phrases WHERE phrase='" + i
-        query_str += "' ORDER BY -freq,category LIMIT 1;"
+        query_str = "SELECT m0,m1,m2,m3,m4 FROM phrases WHERE phrase='%s'" \
+                    " ORDER BY -freq,category LIMIT 1;" % i.encode('utf8')
         result = c.execute(query_str).fetchall()
         encoded = ''
 
