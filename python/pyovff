@@ -170,6 +170,8 @@ def ovff_encode(inFile = sys.stdin, outFile = sys.stdout):
         if ord(i) < 256:
             outFile.write(i)
             skipped = True
+            if i != '\n':
+                skipped = True
             continue
 
         if skipped:
@@ -181,23 +183,25 @@ def ovff_encode(inFile = sys.stdin, outFile = sys.stdout):
         result = c.execute(query_str).fetchall()
         encoded = ''
 
-        for j in result[0]:
-            if j != None:
-                if j == 56:
-                    encoded += '.'
-                elif j == 55:
-                    encoded += ','
-                elif j == 27:
-                    encoded += '\''
-                elif j == 45:
-                    encoded += '['
-                elif j == 46:
-                    encoded += ']'
-                else:
-                    encoded += chr(64 + j)
-
-        encoded += ' '
-        outFile.write(encoded)
+        if result:
+            for j in result[0]:
+                if j != None:
+                    if j == 56:
+                        encoded += '.'
+                    elif j == 55:
+                        encoded += ','
+                    elif j == 27:
+                        encoded += '\''
+                    elif j == 45:
+                        encoded += '['
+                    elif j == 46:
+                        encoded += ']'
+                    else:
+                        encoded += chr(64 + j)
+            encoded += ' '
+            outFile.write(encoded)
+        else:
+            outFile.write(i.encode('utf8'))
 
     c.close()
     sqlHandle.close()
