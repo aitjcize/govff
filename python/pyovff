@@ -163,13 +163,18 @@ def ovff_encode(inFile = sys.stdin, outFile = sys.stdout):
     sqlHandle = sqlite3.connect(database)
     sqlHandle.text_factory = str
     c = sqlHandle.cursor()
+    skipped = False
 
     for i in n:
-
         # omit none chinese(including `\n') to prevent query error
         if ord(i) < 256:
             outFile.write(i)
+            skipped = True
             continue
+
+        if skipped:
+            outFile.write(' ')
+            skipped = False
 
         query_str = "SELECT m0,m1,m2,m3,m4 FROM phrases WHERE phrase='%s'" \
                     " ORDER BY -freq,category LIMIT 1;" % i.encode('utf8')
